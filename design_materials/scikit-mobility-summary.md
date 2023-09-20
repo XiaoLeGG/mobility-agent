@@ -1,8 +1,3 @@
-## Introduction
-We study the description and usage of library scikit-mobility and summarize it.
-
-
-
 # scikit-mobility
 
 `scikit-mobility` is a library for **human mobility analysis** in Python. The library allows to:
