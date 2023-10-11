@@ -1,7 +1,5 @@
 import os
 
-os.environ["OPENAI_API_KEY"] = ""
-
 from langchain.callbacks.manager import CallbackManagerForToolRun
 from langchain.chat_models import ChatOpenAI
 from langchain.tools import BaseTool, Tool
@@ -9,14 +7,16 @@ from langchain.agents import AgentType, initialize_agent
 from pydantic import BaseModel, Field
 from skmob import TrajDataFrame
 from skmob.preprocessing import detection
+from skmob.preprocessing import filtering
 from typing import Optional, Type
+import pandas as pd
 
 
 class StayLocationSchema(BaseModel):
     class Config:
         arbitrary_types_allowed = True
 
-    tdf: TrajDataFrame = Field(description="the input trajectories of the individuals.")
+    file_path: str = Field(description="the data file path. The default is `None`.")
     stop_radius_factor: float = Field(
         description="if argument `spatial_radius_km` is `None`, the spatial_radius used is"
                     "the value specified in the TrajDataFrame properties ("
@@ -32,7 +32,7 @@ class StayLocationSchema(BaseModel):
                                                    "than `no_data_for_minutes`,then this is interpreted as missing "
                                                    "data and does not count as a stop. The default is `1e12`.")
     min_speed_kmh: float = Field(description="if not `None`, remove the points at the end of a stop if their speed is "
-                                             "larger than `min_speed_kmh` km/h. The default is `None`.")
+                                             "larger than `min_speed_kmh` km/h. The default is `-1` to represent 'None'.")
 
 
 class StayLocationTool(BaseTool):
@@ -48,7 +48,7 @@ class StayLocationTool(BaseTool):
 
     def _run(
             self,
-            tdf: TrajDataFrame,
+            file_path: str,
             stop_radius_factor: float,
             minutes_for_a_stop: float,
             spatial_radius_km: float,
@@ -56,10 +56,13 @@ class StayLocationTool(BaseTool):
             no_data_for_minutes: float,
             min_speed_kmh: float,
             run_manager: Optional[CallbackManagerForToolRun] = None,
-    ) -> TrajDataFrame:
+    ) -> str:
         """Use the tool."""
-        return detection.stay_locations(tdf, stop_radius_factor, minutes_for_a_stop, spatial_radius_km, leaving_time,
-                                        no_data_for_minutes, min_speed_kmh)
+        tdf = TrajDataFrame.from_file(file_path, latitude='lat', longitude='lon', user_id='user', datetime='datetime')
+        # Preprocess the trajectory data by filtering out noise
+        tdf = filtering.filter(tdf, max_speed_kmh=100)
+        return str(detection.stay_locations(tdf, stop_radius_factor, minutes_for_a_stop, spatial_radius_km, leaving_time,
+                                        no_data_for_minutes, None if min_speed_kmh < 0 else min_speed_kmh).head())
 
 
 
@@ -68,8 +71,8 @@ tools = [StayLocationTool()]
 
 
 agent = initialize_agent(
-    tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True
+    tools, llm, agent=AgentType.OPENAI_FUNCTIONS, verbose=True
 )
 agent.run(
-    "Who is Leo DiCaprio's girlfriend? What is her current age raised to the 0.43 power?"
+    "a stop detection task on data Geolife Trajectories 1.3. Find some information from the output, like how many rows are in the result, etc. File_path = 'geolife_sample.txt.gz'"
 )
