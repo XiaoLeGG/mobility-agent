@@ -56,15 +56,20 @@ class StayLocationTool(BaseTool):
             no_data_for_minutes: float,
             min_speed_kmh: float,
             run_manager: Optional[CallbackManagerForToolRun] = None,
-    ) -> str:
+    ) -> TrajDataFrame:
         """Use the tool."""
         tdf = TrajDataFrame.from_file(file_path, latitude='lat', longitude='lon', user_id='user', datetime='datetime')
         # Preprocess the trajectory data by filtering out noise
         tdf = filtering.filter(tdf, max_speed_kmh=100)
-        return str(detection.stay_locations(tdf, stop_radius_factor, minutes_for_a_stop, spatial_radius_km, leaving_time,
-                                        no_data_for_minutes, None if min_speed_kmh < 0 else min_speed_kmh).head())
+        return detection.stay_locations(tdf, stop_radius_factor, minutes_for_a_stop, spatial_radius_km, leaving_time,
+                                        no_data_for_minutes, None if min_speed_kmh < 0 else min_speed_kmh)
 
+from langchain.callbacks.base import BaseCallbackHandler
+from langchain.schema.agent import AgentAction
 
+class MyCallbackManager(BaseCallbackHandler):
+    def on_agent_action(self, action: AgentAction) -> None:
+        print(action)
 
 llm = ChatOpenAI(temperature=0)
 tools = [StayLocationTool()]
@@ -73,6 +78,10 @@ tools = [StayLocationTool()]
 agent = initialize_agent(
     tools, llm, agent=AgentType.OPENAI_FUNCTIONS, verbose=True
 )
+
+agent
+
 agent.run(
-    "a stop detection task on data Geolife Trajectories 1.3. Find some information from the output, like how many rows are in the result, etc. File_path = 'geolife_sample.txt.gz'"
-)
+    "a stop detection task on data Geolife Trajectories 1.3. Find some information from the output, like how many rows are in the result, etc. File_path = 'geolife_sample.txt.gz'",
+    callback_manager=MyCallbackManager())
+
