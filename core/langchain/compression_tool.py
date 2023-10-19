@@ -15,9 +15,10 @@ class CompressionTool(BaseTool):
     description = "Compress the consecutive points."
     args_schema: Type[CompressionSchema] = CompressionSchema
     def _run(
+            self,
             input_file: str,
             output_file: str,
-            radius: float
+            radius: float=0.2
     ) -> int:
         """Use the tool."""
         return compression.compression(input_file, output_file, radius)

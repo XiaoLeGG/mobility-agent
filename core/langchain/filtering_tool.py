@@ -19,11 +19,12 @@ class FilteringTool(BaseTool):
     description = "Filter the useless or unreasonable points such as object suddenly moves too fast or object moves in a short and fast circles."
     args_schema: Type[FilteringSchema] = FilteringSchema
     def _run(
+            self,
             input_file: str,
             output_file: str,
-            max_speed: float,
-            include_loop: bool,
-            loop_intensity: float
+            max_speed: float=200,
+            include_loop: bool=True,
+            loop_intensity: float=1.0
     ) -> int:
         """Use the tool."""
         return filtering.noise_filtering(input_file, output_file, max_speed, include_loop, loop_intensity)

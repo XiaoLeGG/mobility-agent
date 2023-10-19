@@ -29,6 +29,6 @@ def noise_filtering(
         The number of deleted points.
     """
     tdf = TrajDataFrame.from_file(input_file, latitude='lat', longitude='lon', user_id='user', datetime='datetime')
-    ntdf = filtering.filter(tdf, max_speed_kmh=max_speed, include_loops=include_loop, speed_kmh=loop_intensity * 5, max_loop=loop_intensity * 6, ratio_max=loop_intensity * 0.25)
+    ntdf = filtering.filter(tdf, max_speed_kmh=max_speed, include_loops=include_loop, speed_kmh=loop_intensity * 5, max_loop=int(loop_intensity * 6), ratio_max=loop_intensity * 0.25)
     ntdf.to_csv(output_file, index=False)
     return len(tdf) - len(ntdf)

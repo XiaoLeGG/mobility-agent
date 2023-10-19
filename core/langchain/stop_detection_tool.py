@@ -16,10 +16,11 @@ class StopDetectionTool(BaseTool):
     description = "Find the points in trajectory that can represent point-of-interest such as schools, restaurants, and bars, or user-specific places such as home and work locations."
     args_schema: Type[StopDetectionSchema] = StopDetectionSchema
     def _run(
+            self,
             input_file: str,
             output_file: str,
-            stay_time: float,
-            radius: float
+            stay_time: float=20,
+            radius: float=1.0
     ) -> int:
         """Use the tool."""
         return detection.stop_detection(input_file, output_file, stay_time, radius)
