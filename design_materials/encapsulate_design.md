@@ -102,17 +102,16 @@ This function compute the jump lengths (in kilometers) of a set of individuals. 
 
 - input_file (str) - The data file path to be processed.
 - output_file (str) - The file path where the processed data stored.
-- merge (boolean) - True: merge the individuals' lists into one list
 
 ##### 2.1.3.3 Return
 
-- result (ndarray) - A 2-dimension array indicating the result table with indivisual id and corresponding list of jump lengths.
+- result (ndarray) - A 2-dimension array indicating the result table with individual id and corresponding list of jump lengths.
 
 #### 2.1.4 Home Location
 
 ##### 2.1.4.1 Description
 
-This function compute the home location of a set of individuals.
+This function compute the home location of a set of individuals. The home location is defined as the location `v` for every individual `u` visits most during nighttime.
 
 ##### 2.1.4.2 Arguments
 
@@ -123,13 +122,13 @@ This function compute the home location of a set of individuals.
 
 ##### 2.1.4.3 Return
 
-- result (ndarray) : A 3-dimension numpy array indicating the result table with indivisual id and corresponding home location (latitude and longitude).
+- result (ndarray) : A 3-dimension numpy array indicating the result table with individual id and corresponding home location (latitude and longitude).
 
 #### 2.1.5 Distance Straight Line
 
 ##### 2.1.5.1 Description
 
-Compute the distance (in kilometers) travelled straight line by a set of individuals in a TrajDataFrame.
+Compute the distance (in kilometers) travelled straight line by a set of individuals in a TrajDataFrame. The distance straight d<sub>SL</sub> travelled by an individual `u` is computed as the sum of the distances travelled `u`.
 
 ##### 2.1.5.2 Arguments
 
@@ -138,7 +137,7 @@ Compute the distance (in kilometers) travelled straight line by a set of individ
 
 ##### 2.1.5.3 Return
 
-- Successful (boolean) - Ture: Succeed.
+- Successful (ndarray) - A 2-dimension array indicating the result table with individual id and corresponding list of distance straight line.
 
 #### 2.1.6 Frequency Rank
 
@@ -153,7 +152,7 @@ Compute the frequency rank of the location of a set of individuals in a TrajData
 
 ##### 2.1.6.3 Return
 
-- Successful (boolean) - Ture: Succeed.
+- Successful (ndarray) - A 4-dimension numpy array indicating the result table with indivisual id, location (latitude and longitude) and the frequency rank for each location of the individuals.
 
 #### 2.1.7 Location Frequency
 
@@ -164,14 +163,14 @@ Compute the visitation frequency of each location, for a set of individuals in a
 ##### 2.1.7.2 Arguments
 
 - input_file (str) - The data file path to be processed.
-- normalize (bool) - if True, the number of visits to a location by an individual is computed as probability, i.e., divided by the individual’s total number of visits. The default is True. // 这个可以直接设置为True or False,不需要作为参数
-- as_ranks (bool) - if True, return a list where element i indicates the average visitation frequency of the i-th most frequent location. The default is False.
+- normalize (bool) - if True, the number of visits to a location by an individual is computed as **probability**, i.e., divided by the individual’s total number of visits. The default is True. // 这个可以直接设置为True or False,不需要作为参数，
+- as_ranks (bool) - if True, return a list where element i indicates the average visitation frequency of the i-th most frequent location. The default is False. // 这个或者可以不用，直接使用frequency rank
 - location_columns (list) - the name of the column(s) indicating the location. The default is [constants.LATITUDE, constants.LONGITUDE]. // 我们也可以规范化命名，这个参数也可以不需要
 - output_file (str) - The file path where the processed data((Pandas DataFrame: the location frequency for each location for each individual) or (List: the ranks list for each individual)) stored.
 
 ##### 2.1.7.3 Return
 
-- Successful (boolean) - Ture: Succeed.
+- Successful (ndarray) -  A 4-dimension numpy array indicating the result table with indivisual id, location (latitude and longitude) and the location frequency  for each location of the individuals.
 
 #### 2.1.8 Individual mobility network
 
@@ -187,22 +186,22 @@ Compute the individual mobility network of a set of individuals in a TrajDataFra
 
 ##### 2.1.8.3 Return
 
-- Successful (boolean) - Ture: Succeed
+- Successful (ndarray) - A 5-dimension numpy array indicating the result table with indivisual id, origin_location (latitude and longitude), dest_location (latitude and longitude) and the trip_id.
 
 #### 2.1.9 Max Distance From Home
 
 ##### 2.1.9.1 Description
 
-Compute the maximum distance (in kilometers) traveled from their home location by a set of individuals in a TrajDataFrame. 
+Compute the maximum distance (in kilometers) traveled from their home location by a set of individuals in a TrajDataFrame. The most frequency location in nighttime is the location of home. 
 
 ##### 2.1.9.2 Arguments
 
 - input_file (str) - The data file path to be processed.
-- start_night (str) - the starting time of the night (format HH:MM). The default is ‘22:00’.
-- end_night (str) - the ending time for the night (format HH:MM). The default is ‘07:00’.
+- start_night (str) - the starting time of the night (format HH:MM). The default is ‘22:00’. using to find home location.
+- end_night (str) - the ending time for the night (format HH:MM). The default is ‘07:00’. using to find home location.
 - output_file (str) - The file path where the processed data(Pandas DataFrame: the maximum distance from home of the individuals.) stored.
 
 ##### 2.1.9.3 Return
 
-- Successful (boolean) - Ture: Succeed
+- Successful (ndarray) - A 2-dimension numpy array indicating the result table with individual id and the max distance from home. 
 
