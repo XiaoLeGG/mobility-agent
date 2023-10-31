@@ -1,5 +1,5 @@
-from skmob.core.trajectorydataframe import TrajDataFrame
 from skmob.preprocessing import compression as comp
+from ..utils import file_utils as fu
 
 def compression(
         input_file: str,
@@ -23,7 +23,7 @@ def compression(
     int
         The number of compressed points.
     """
-    tdf = TrajDataFrame.from_file(input_file, latitude='lat', longitude='lon', user_id='user', datetime='datetime')
+    tdf = fu.load_tdf(input_file)
     ctdf = comp.compress(tdf, spatial_radius_km=radius)
-    ctdf.to_csv(output_file, index=False)
+    fu.save_csv(ctdf, output_file)
     return len(ctdf)

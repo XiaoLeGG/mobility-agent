@@ -61,67 +61,69 @@ This function compress the consecutive points.
 
 ##### 2.1.1.1 Description
 
-This function Compute the radius of gyration (in kilometers) of a set of individuals in a TrajDataFrame.
+This function compute the radius of gyration (in kilometers) of a set of individuals.
 
 The radius of gyration is a measure used to quantify the spatial dispersion or the spread of an individual's or object's movements over time. It provides an indication of how far an individual typically moves from their center of activity.
 
 ##### 2.1.1.2 Arguments
 
 - input_file (str) - The data file path to be processed.
-- output_file (str) - The file path where the processed data(Pandas DataFrame: the radius of gyration of each individual) stored.
+- output_file (str) - The file path where the processed data stored.
 
 ##### 2.1.1.3 Returns
 
-- Successful (boolean) - Ture: Succeed.
+- result (ndarray) - A 2-dimension numpy array indicating the result table with indivisual id and corresponding gyration.
 
-#### 2.1.2 k_radius_of_gyration
+#### 2.1.2 K Radius of Gyration
 
 ##### 2.1.2.1 Description
 
-Compute the k-radii of gyration (in kilometers) of a set of individuals in a TrajDataFrame.
+Compute the k-radii of gyration (in kilometers) of a set of individuals.
 
 In mobility analysis, the k-radius of gyration indicates the characteristic distance travelled by that individual as induced by their k most frequent locations.
 
 ##### 2.1.2.2 Arguments
 
 - input_file (str) - The data file path to be processed.
-- k(int) - the number of most frequent locations to consider. The default is 2. The possible range of values is [2,+inf].
-- output_file (str) - The file path where the processed data(Pandas DataFrame: the k-radii of gyration of the individuals) stored.
+- output_file (str) - The file path where the processed data stored.
+- k (int) - the number of most frequent locations to consider. The default is 2. The possible range of values is [2,+inf].
 
 ##### 2.1.2.3 Returns
 
-- Successful (boolean) - Ture: Succeed.
+- result (ndarray) - A 2-dimension numpy array indicating the result table with indivisual id and corresponding gyration.
 
 #### 2.1.3 Jump lengths
 
 ##### 2.1.3.1 Description
 
-This3 function compute the jump lengths (in kilometers) of a set of individuals in a TrajDataFrame. A jump length (or trip distance) is defined as the geographic distance between two consecutive points. 
+This function compute the jump lengths (in kilometers) of a set of individuals. A jump length (or trip distance) is defined as the geographic distance between two consecutive points. 
 
 ##### 2.1.3.2 Arguments
 
 - input_file (str) - The data file path to be processed.
-- output_file (str) - The file path where the processed data(Pandas DataFrame: the jump lengths for  each individual) stored.
+- output_file (str) - The file path where the processed data stored.
 - merge (boolean) - True: merge the individuals' lists into one list
 
 ##### 2.1.3.3 Return
 
-- Successful (boolean) - Ture: Succeed.
+- result (ndarray) - A 2-dimension array indicating the result table with indivisual id and corresponding list of jump lengths.
 
 #### 2.1.4 Home Location
 
 ##### 2.1.4.1 Description
 
-This function compute the home location of a set of individuals in a TrajDataFrame.
+This function compute the home location of a set of individuals.
 
 ##### 2.1.4.2 Arguments
 
 - input_file (str) - The data file path to be processed.
-- output_file (str) - The file path where the processed data(Pandas DataFrame: the home location, as a (latitude, longitude) pair, of the individuals) stored.
+- output_file (str) - The file path where the processed data stored.
+- start_night_time (str) - The start time of the night. The default is '22:00'.
+- end_night_time (str) - The end time of the night. The default is '06:00'.
 
 ##### 2.1.4.3 Return
 
-- Successful (boolean) - Ture: Succeed.
+- result (ndarray) : A 3-dimension numpy array indicating the result table with indivisual id and corresponding home location (latitude and longitude).
 
 #### 2.1.5 Distance Straight Line
 

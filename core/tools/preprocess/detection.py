@@ -1,5 +1,5 @@
 from skmob.preprocessing import detection
-from skmob.core.trajectorydataframe import TrajDataFrame
+from ..utils import file_utils as fu
 
 def stop_detection(
         input_file: str,
@@ -26,7 +26,7 @@ def stop_detection(
     int
         The number of detected points.
     """
-    tdf = TrajDataFrame.from_file(input_file, latitude='lat', longitude='lon', user_id='user', datetime='datetime')
+    tdf = fu.load_tdf(input_file)
     stdf = detection.stay_locations(tdf, minutes_for_a_stop=stay_time, spatial_radius_km=radius, leaving_time=False, no_data_for_minutes=1e12, min_speed_kmh=2)
-    stdf.to_csv(output_file, index=False)
+    fu.save_csv(stdf, output_file)
     return len(stdf)
