@@ -449,7 +449,7 @@ The result(output file) of this measure is as follows:
 
 ##### 2.2.3.3 Returns
 
-- result (triple) - location tuple (lat,lng) of the place with highest random location entropy.
+- result (triple) - location tuple (lat,lng) of the place with the highest random location entropy.
 
 #### 2.2.4 Uncorrelated Location Entropy
 
@@ -481,7 +481,7 @@ The result(output file) of this measure is as follows:
 
 ##### 2.2.4.3 Returns
 
-- result (triple) - location tuple (lat,lng) of the place with highest uncorrelated location entropy.
+- result (triple) - location tuple (lat,lng) of the place with the highest uncorrelated location entropy.
 
 #### 2.2.5 Visits per location
 
