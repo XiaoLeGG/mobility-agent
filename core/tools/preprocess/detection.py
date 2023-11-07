@@ -27,6 +27,6 @@ def stop_detection(
         The number of detected points.
     """
     tdf = fu.load_tdf(input_file)
-    stdf = detection.stay_locations(tdf, minutes_for_a_stop=stay_time, spatial_radius_km=radius, leaving_time=False, no_data_for_minutes=1e12, min_speed_kmh=2)
+    stdf = detection.stay_locations(tdf, minutes_for_a_stop=stay_time, spatial_radius_km=radius, leaving_time=True, no_data_for_minutes=1e12, min_speed_kmh=2)
     fu.save_csv(stdf, output_file)
     return len(stdf)
