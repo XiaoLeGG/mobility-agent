@@ -7,7 +7,9 @@ def jump_lengths(
 ):
     """
     This function compute the jump lengths (in kilometers) of a set of individuals. A jump length (or trip distance) is defined as the geographic distance between two consecutive points. 
-    
+
+    Warning: The input TrajDataFrame must be sorted in ascending order by datetime.
+
     Parameters
     ----------
     input_file : str
@@ -22,5 +24,5 @@ def jump_lengths(
     """
     tdf = fu.load_tdf(input_file)
     jldf = jl(tdf, show_progress=False, merge=False)
-    fu.save_csv(jldf, output_file)
+    fu.df_save_csv(jldf, output_file)
     return jldf.to_numpy()

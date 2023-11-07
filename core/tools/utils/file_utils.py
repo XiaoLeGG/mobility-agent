@@ -1,4 +1,5 @@
 from skmob.core.trajectorydataframe import TrajDataFrame
+import pandas as pd
 
 def load_tdf(
     input_file : str      
@@ -10,3 +11,9 @@ def save_csv(
     output_file : str
 ):
     frame.to_csv(output_file)
+
+def df_save_csv(
+    df : pd.DataFrame,
+    output_file : str
+):
+    df.to_csv(output_file)

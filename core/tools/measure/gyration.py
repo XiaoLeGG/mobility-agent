@@ -26,7 +26,7 @@ def radius_gyration(
     """
     tdf = fu.load_tdf(input_file)
     rdf = radius_of_gyration(tdf, False)
-    fu.save_csv(rdf, output_file)
+    fu.df_save_csv(rdf, output_file)
     return rdf.to_numpy()
 
 
@@ -57,6 +57,6 @@ def k_radius_gyration(
     """
     tdf = fu.load_tdf(input_file)
     kdf = k_radius_of_gyration(tdf, k, False)
-    fu.save_csv(kdf, output_file)
+    fu.df_save_csv(kdf, output_file)
     return kdf.to_numpy()
     

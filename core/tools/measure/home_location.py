@@ -8,7 +8,8 @@ def home_location(
     end_night_time : str='06:00',
 ):
     """
-    
+    This function compute the home location of a set of individuals. The home location is defined as the location `v` for every individual `u` visits most during nighttime.
+
     Parameters
     ----------
     input_file : str
@@ -27,5 +28,5 @@ def home_location(
     """
     tdf = fu.load_tdf(input_file)
     hldf = hl(tdf, start_night_time, end_night_time, False)
-    fu.save_csv(hldf, output_file)
+    fu.df_save_csv(hldf, output_file)
     return hldf.to_numpy()
