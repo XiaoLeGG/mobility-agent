@@ -23,5 +23,5 @@ def wait_time(
     """
     tdf = fu.load_tdf(input_file)
     wt_df = wt(tdf, False, False)
-    fu.df_save_csv(wt_df, output_file)
+    fu.save_csv(wt_df, output_file)
     return wt_df.to_numpy()

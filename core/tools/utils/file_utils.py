@@ -7,13 +7,7 @@ def load_tdf(
     return TrajDataFrame.from_file(input_file, latitude='lat', longitude='lon', user_id='user', datetime='datetime')
 
 def save_csv(
-    frame : TrajDataFrame,
+    frame : pd.DataFrame,
     output_file : str
 ):
     frame.to_csv(output_file)
-
-def df_save_csv(
-    df : pd.DataFrame,
-    output_file : str
-):
-    df.to_csv(output_file)

@@ -23,7 +23,7 @@ def max_distance(
     """
     tdf = fu.load_tdf(input_file)
     mddf = md(tdf,False)
-    fu.df_save_csv(mddf, output_file)
+    fu.save_csv(mddf, output_file)
     return mddf.to_numpy()
 
 
@@ -54,5 +54,5 @@ def home_location_from_home(
     """
     tdf = fu.load_tdf(input_file)
     mdfh_df = mdfh(tdf, start_night_time, end_night_time,False)
-    fu.df_save_csv(mdfh_df, output_file)
+    fu.save_csv(mdfh_df, output_file)
     return mdfh_df.to_numpy()

@@ -25,7 +25,7 @@ def random_entropy(
     """
     tdf = fu.load_tdf(input_file)
     rand_pd = rand_e(tdf, False)
-    fu.df_save_csv(rand_pd, output_file)
+    fu.save_csv(rand_pd, output_file)
     return rand_pd.to_numpy()
 
 
@@ -56,7 +56,7 @@ def real_entropy(
     """
     tdf = fu.load_tdf(input_file)
     real_pd = real_e(tdf, False)
-    fu.df_save_csv(real_pd, output_file)
+    fu.save_csv(real_pd, output_file)
     return real_pd.to_numpy()
 
 
@@ -85,5 +85,5 @@ def uncorrelated_entropy(
     """
     tdf = fu.load_tdf(input_file)
     une_pd = une(tdf,False, False,)
-    fu.df_save_csv(une_pd, output_file)
+    fu.save_csv(une_pd, output_file)
     return une_pd.to_numpy()

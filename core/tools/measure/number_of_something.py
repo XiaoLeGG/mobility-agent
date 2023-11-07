@@ -24,7 +24,7 @@ def number_of_visits(
     """
     tdf = fu.load_tdf(input_file)
     nv_df = nv(tdf, False)
-    fu.df_save_csv(nv_df, output_file)
+    fu.save_csv(nv_df, output_file)
     return nv_df.to_numpy()
 
 def number_of_locations(
@@ -48,6 +48,6 @@ def number_of_locations(
     """
     tdf = fu.load_tdf(input_file)
     nl_df = nl(tdf, False)
-    fu.df_save_csv(nl_df, output_file)
+    fu.save_csv(nl_df, output_file)
     return nl_df.to_numpy()
 

@@ -28,5 +28,5 @@ def home_location(
     """
     tdf = fu.load_tdf(input_file)
     hldf = hl(tdf, start_night_time, end_night_time, False)
-    fu.df_save_csv(hldf, output_file)
+    fu.save_csv(hldf, output_file)
     return hldf.to_numpy()

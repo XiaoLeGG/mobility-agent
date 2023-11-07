@@ -24,5 +24,5 @@ def recency_rank(
     """
     tdf = fu.load_tdf(input_file)
     rr_df = rr(tdf, False)
-    fu.df_save_csv(rr_df, output_file)
+    fu.save_csv(rr_df, output_file)
     return rr_df.to_numpy()
