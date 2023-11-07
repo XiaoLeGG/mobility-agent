@@ -89,7 +89,7 @@ The radius of gyration is a measure used to quantify the spatial dispersion or t
 
 ##### 2.1.1.3 Returns
 
-- result (ndarray) - A 2-dimension numpy array indicating the result table with indivisual id and corresponding gyration.
+- result (ndarray) - A 2-dimension numpy array indicating the result table with individual id and corresponding gyration.
 
 #### 2.1.2 K Radius of Gyration
 
@@ -107,7 +107,7 @@ In mobility analysis, the k-radius of gyration indicates the characteristic dist
 
 ##### 2.1.2.3 Returns
 
-- result (ndarray) - A 2-dimension numpy array indicating the result table with indivisual id and corresponding gyration.
+- result (ndarray) - A 2-dimension numpy array indicating the result table with individual id and corresponding gyration.
 
 #### 2.1.3 Jump lengths
 
@@ -147,7 +147,7 @@ This function compute the home location of a set of individuals. The home locati
 
 ##### 2.1.5.1 Description
 
-Compute the distance (in kilometers) travelled straight line by a set of individuals in a TrajDataFrame. The distance straight d<sub>SL</sub> travelled by an individual `u` is computed as the sum of the distances travelled `u`.
+Compute the distance (in kilometers) travelled straight line by a set of individuals. The distance straight d<sub>SL</sub> travelled by an individual `u` is computed as the sum of the distances travelled `u`.
 
 Warning: The input TrajDataFrame must be sorted in ascending order by datetime.
 
@@ -164,7 +164,7 @@ Warning: The input TrajDataFrame must be sorted in ascending order by datetime.
 
 ##### 2.1.6.1 Description
 
-Compute the frequency rank of the location of a set of individuals in a TrajDataFrame. The frequency rank K <sub>f</sub> (r<sub>i</sub>) of a location r<sub>i</sub> of an individual u is K <sub>f</sub> (r<sub>i</sub>)=1 if location r<sub>i</sub> is the most visited location, it is K <sub>f</sub> (r<sub>i</sub>)=2 if r<sub>i</sub> is the second-most visited location, and so on.
+Compute the frequency rank of the location of a set of individuals. The frequency rank K <sub>f</sub> (r<sub>i</sub>) of a location r<sub>i</sub> of an individual u is K <sub>f</sub> (r<sub>i</sub>)=1 if location r<sub>i</sub> is the most visited location, it is K <sub>f</sub> (r<sub>i</sub>)=2 if r<sub>i</sub> is the second-most visited location, and so on.
 
 ##### 2.1.6.2 Arguments
 
@@ -173,13 +173,13 @@ Compute the frequency rank of the location of a set of individuals in a TrajData
 
 ##### 2.1.6.3 Return
 
-- result (ndarray) - A 4-dimension numpy array indicating the result table with indivisual id, location (latitude and longitude) and the frequency rank for each location of the individuals.
+- result (ndarray) - A 4-dimension numpy array indicating the result table with individual id, location (latitude and longitude) and the frequency rank for each location of the individuals.
 
 #### 2.1.7 Location Frequency
 
 ##### 2.1.7.1 Description
 
-Compute the visitation frequency of each location, for a set of individuals in a TrajDataFrame.  Given an individual `u`, the visitation frequency of a location r<sub>i</sub> is the number of visits to that location by `u`.  The higher the value, the more frequently u is located at r<sub>i</sub> 
+Compute the visitation frequency of each location, for a set of individuals.  Given an individual `u`, the visitation frequency of a location r<sub>i</sub> is the number of visits to that location by `u`.  The higher the value, the more frequently u is located at r<sub>i</sub> 
 
 ##### 2.1.7.2 Arguments
 
@@ -191,13 +191,13 @@ Compute the visitation frequency of each location, for a set of individuals in a
 
 ##### 2.1.7.3 Return
 
-- result (ndarray) -  A 4-dimension numpy array indicating the result table with indivisual id, location (latitude and longitude) and the location frequency  for each location of the individuals.
+- result (ndarray) -  A 4-dimension numpy array indicating the result table with individual id, location (latitude and longitude) and the location frequency  for each location of the individuals.
 
 #### 2.1.8 Individual mobility network
 
 ##### 2.1.8.1 Description
 
-Compute the individual mobility network of a set of individuals in a TrajDataFrame. An Individual Mobility Network (aka IMN) of an individual `u` is a directed graph `G_u=(V,E)`, where `V` is the set of nodes and `E` is the set of edges. Nodes indicate locations visisted by `u`, and edges indicate trips between two locations by `u`.  The weight of edges is the number of travel performed by `u` on that edge.
+Compute the individual mobility network of a set of individuals. An Individual Mobility Network (aka IMN) of an individual `u` is a directed graph `G_u=(V,E)`, where `V` is the set of nodes and `E` is the set of edges. Nodes indicate locations visited by `u`, and edges indicate trips between two locations by `u`.  The weight of edges is the number of travel performed by `u` on that edge.
 
 Warning: The input TrajDataFrame must be sorted in ascending order by datetime.
 
@@ -209,13 +209,13 @@ Warning: The input TrajDataFrame must be sorted in ascending order by datetime.
 
 ##### 2.1.8.3 Return
 
-- result (ndarray) - A 5-dimension numpy array indicating the result table with indivisual id, origin_location (latitude and longitude), dest_location (latitude and longitude) and the trip_id.
+- result (ndarray) - A 5-dimension numpy array indicating the result table with individual id, origin_location (latitude and longitude), dest_location (latitude and longitude) and the trip_id.
 
 #### 2.1.9 Max Distance From Home
 
 ##### 2.1.9.1 Description
 
-Compute the maximum distance (in kilometers) traveled from their home location by a set of individuals in a TrajDataFrame. The most frequency location in nighttime is the location of home. 
+Compute the maximum distance (in kilometers) traveled from their home location by a set of individuals. The most frequency location in nighttime is the location of home. 
 
 ##### 2.1.9.2 Arguments
 
@@ -232,7 +232,7 @@ Compute the maximum distance (in kilometers) traveled from their home location b
 
 ##### 2.1.10.1 Description
 
-Compute the maximum distance (in kilometers) traveled by a set of individuals in a TrajDataFrame. The maximum distance is defined as the maximum distance between two data point for every individual.
+Compute the maximum distance (in kilometers) traveled by a set of individuals. The maximum distance is defined as the maximum distance between two data point for every individual.
 
 ##### 2.1.10.2 Arguments
 
@@ -247,7 +247,7 @@ Compute the maximum distance (in kilometers) traveled by a set of individuals in
 
 ##### 2.1.11.1 Description
 
-Compute the number of distinct locations visited by a set of individuals in a TrajDataFrame.
+Compute the number of distinct locations visited by a set of individuals.
 
 ##### 2.1.11.2 Arguments
 
@@ -262,7 +262,7 @@ Compute the number of distinct locations visited by a set of individuals in a Tr
 
 ##### 2.1.12.1 Description
 
-Compute the number of visits (i.e., data points) for each individual in a TrajDataFrame.
+Compute the number of visits (i.e., data points) for each individual.
 
 ##### 2.1.12.2 Arguments
 
@@ -277,7 +277,7 @@ Compute the number of visits (i.e., data points) for each individual in a TrajDa
 
 ##### 2.1.13.1 Description
 
-Compute the random entropy of a set of individuals in a TrajDataFrame. In this tool, we think every location is visited with equal probability, and the random entropy is defined as E<sub>rand</sub>(u)=log<sub>2</sub>(N<sub>u</sub>) , where N<sub>u</sub> is the number of distinct locations visited by individual `u`. The more places the user went, the higher the value 
+Compute the random entropy of a set of individuals. In this tool, we think every location is visited with equal probability, and the random entropy is defined as E<sub>rand</sub>(u)=log<sub>2</sub>(N<sub>u</sub>) , where N<sub>u</sub> is the number of distinct locations visited by individual `u`. The more places the user went, the higher the value 
 
 ##### 2.1.13.2 Arguments
 
@@ -292,7 +292,7 @@ Compute the random entropy of a set of individuals in a TrajDataFrame. In this t
 
 ##### 2.1.14.1 Description
 
-Compute the real entropy of a set of individuals in a TrajDataFrame. The real entropy depends not only on the frequency of visitation, but also the order in which the nodes were visited and the time spent at each location, thus capturing the full spatio-temporal order present in an `u`'s mobility patterns. he random entropy of an individual `u` is defined as
+Compute the real entropy of a set of individuals. The real entropy depends not only on the frequency of visitation, but also the order in which the nodes were visited and the time spent at each location, thus capturing the full spatio-temporal order present in an `u`'s mobility patterns. he random entropy of an individual `u` is defined as
 $$
 E(u) = - \sum_{T'_u}P(T'_u)log_2[P(T_u^i)]
 $$
@@ -313,7 +313,7 @@ Warning: The input TrajDataFrame must be sorted in ascending order by datetime.
 
 ##### 2.1.15.1 Description
 
-Compute the recency rank of the location of a set of individuals in a TrajDataFrame. The recency rank K <sub>s</sub> (r<sub>i</sub>) of a location r<sub>i</sub> of an individual u is K <sub>s</sub> (r<sub>i</sub>)=1 if location r<sub>i</sub> is the last visited location, it is K <sub>s</sub> (r<sub>i</sub>)=2 if r<sub>i</sub> is the second-lastvisited location, and so on.
+Compute the recency rank of the location of a set of individuals. The recency rank K <sub>s</sub> (r<sub>i</sub>) of a location r<sub>i</sub> of an individual u is K <sub>s</sub> (r<sub>i</sub>)=1 if location r<sub>i</sub> is the last visited location, it is K <sub>s</sub> (r<sub>i</sub>)=2 if r<sub>i</sub> is the second-last visited location, and so on.
 
 Warning: The input TrajDataFrame must be sorted in ascending order by datetime.
 
@@ -324,13 +324,13 @@ Warning: The input TrajDataFrame must be sorted in ascending order by datetime.
 
 ##### 2.1.15.3 Return
 
-- result (ndarray) - A 4-dimension numpy array indicating the result table with indivisual id, location (latitude and longitude) and the recency rank for each location of the individuals. (sorted in ascending order )
+- result (ndarray) - A 4-dimension numpy array indicating the result table with individual id, location (latitude and longitude) and the recency rank for each location of the individuals. (sorted in ascending order )
 
 #### 2.1.16 uncorrelated entropy
 
 ##### 2.1.16.1 Description
 
-Compute the temporal-uncorrelated entropy of a set of individuals in a TrajDataFrame. The temporal-uncorrelated entropy of an individual `u` is defined as 
+Compute the temporal-uncorrelated entropy of a set of individuals. The temporal-uncorrelated entropy of an individual `u` is defined as 
 $$
 E_{unc}(u) = - \sum_{j=1}^{N_u} p_u(j) log_2 p_u(j)
 $$
@@ -350,7 +350,7 @@ where p<sub>u</sub>(j) is the number of distinct locations visited by `i` and p<
 
 ##### 2.1.17.1 Description
 
-Compute the waiting times (in seconds) between the movements of each individual in a TrajDataFrame. The wait time is  defined as the time between two consecutive points. 
+Compute the waiting times (in seconds) between the movements of each individual. The wait time is  defined as the time between two consecutive points. 
 
 Warning: The input TrajDataFrame must be sorted in ascending order by datetime.
 
@@ -361,7 +361,7 @@ Warning: The input TrajDataFrame must be sorted in ascending order by datetime.
 
 ##### 2.1.17.3 Return
 
-- result (ndarray) - A 2-dimension numpy array indicating the result table with indivisual id and the list record the wait time between every two consecutive points for every individual.
+- result (ndarray) - A 2-dimension numpy array indicating the result table with individual id and the list record the wait time between every two consecutive points for every individual.
 
 ### 2.2 Collective Measures
 

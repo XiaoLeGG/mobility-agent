@@ -20,7 +20,7 @@ def jump_lengths(
     Returns
     -------
     ndarray
-        A 2-dimension numpy array indicating the result table with indivisual id and corresponding list of jump lengths.
+        A 2-dimension numpy array indicating the result table with individual id and corresponding list of jump lengths.
     """
     tdf = fu.load_tdf(input_file)
     jldf = jl(tdf, show_progress=False, merge=False)

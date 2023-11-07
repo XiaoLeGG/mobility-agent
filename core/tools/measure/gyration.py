@@ -21,7 +21,7 @@ def radius_gyration(
     Returns
     -------
     ndarray
-        A 2-dimension numpy array indicating the result table with indivisual id and corresponding gyration.
+        A 2-dimension numpy array indicating the result table with individual id and corresponding gyration.
     
     """
     tdf = fu.load_tdf(input_file)

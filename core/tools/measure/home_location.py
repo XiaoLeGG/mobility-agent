@@ -24,7 +24,7 @@ def home_location(
     Returns
     -------
     ndarray
-        A 3-dimension numpy array indicating the result table with indivisual id and corresponding home location (latitude and longitude).
+        A 3-dimension numpy array indicating the result table with individual id and corresponding home location (latitude and longitude).
     """
     tdf = fu.load_tdf(input_file)
     hldf = hl(tdf, start_night_time, end_night_time, False)

@@ -22,7 +22,7 @@ def individual_mobility_network(
     Returns
     -------
     ndarray
-        A 5-dimension numpy array indicating the result table with indivisual id, origin_location (latitude and longitude), dest_location (latitude and longitude) and the trip_id.
+        A 5-dimension numpy array indicating the result table with individual id, origin_location (latitude and longitude), dest_location (latitude and longitude) and the trip_id.
     """
     tdf = fu.load_tdf(input_file)
     imn_df = imn(tdf, False, False)
