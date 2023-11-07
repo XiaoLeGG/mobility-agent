@@ -53,6 +53,23 @@ This function compress the consecutive points.
 
 - detected_points (int) - The collected points.
 
+### 1.4 Clustering
+
+#### 1.4.1 Description
+
+This function cluster the stops of each individual.
+The stops correspond to visits to the same location at different times, based on spatial proximity.
+
+#### 1.4.2 Arguments
+
+- input_file (str) - The data file path to be processed.
+- output_file (str) - The file path where the processed data stored.
+- radius (float) - The parameter `eps` of the function sklearn.cluster.DBSCAN, in kilometers. 
+
+#### 1.4.3 Returns
+
+- detected_points (int) - The collected points.
+
 ## 2. Mobility Measures
 
 ### 2.1 Individual Measures
@@ -346,13 +363,176 @@ Warning: The input TrajDataFrame must be sorted in ascending order by datetime.
 
 - result (ndarray) - A 2-dimension numpy array indicating the result table with indivisual id and the list record the wait time between every two consecutive points for every individual.
 
+### 2.2 Collective Measures
 
+#### 2.2.1 Homes per Location
 
+##### 2.2.1.1 Description
 
+This function computes the number of home locations in each location. 
 
+The number of home locations in a location is computed as:
+$$
+N_{homes}(j) = |\{h_u | h_u = j, u \in U \}|
+$$
+where indicates the home location of an individual and is the set of individuals.
 
+The result(output file) of this measure is as follows:
 
+```
+         lat         lng  num_homes
+0  39.739154 -104.984703       15
+1  37.584103 -122.366083        6
+2  40.014986 -105.270546        5
+3  37.580304 -122.343679        5
+4  37.774929 -122.419415        4
+```
 
+##### 2.2.1.2 Arguments
 
+- input_file (str) - The data file path to be processed.
+- output_file (str) - The file path where the processed data stored.
 
+##### 2.2.1.3 Returns
+
+- result (triple) - location tuple (lat,lng) of the place with most homes.
+
+#### 2.2.2 Mean Square Displacement
+
+##### 2.2.2.1 Description
+
+Compute the mean square displacement across the individuals. 
+
+The mean squared displacement is a measure of the deviation of the position of an object with respect to a reference position over time. It is defined as:
+$$
+MSD = \langle |r(t) - r(0)| \rangle = \frac{1}{N} \sum_{i = 1}^N |r^{(i)}(t) - r^{(i)}(0)|^2
+$$
+where $$N$$ is the number of individuals to be averaged, vector $$x^{(i)}(0)$$ is the reference position of the $$i$$-th individual, and vector $$x^{(i)}(t)$$ is the position of the $$i$$-th individual at time $$t$$.
+
+##### 2.2.2.2 Arguments
+
+- input_file (str) - The data file path to be processed.
+- output_file (str) - The file path where the processed data stored.
+- days (*int, optional*) – the days since the starting time. The default is 0.
+
+##### 2.2.2.3 Returns
+
+- result (double) - the mse
+
+#### 2.2.3 Random location entropy
+
+##### 2.2.3.1 Description
+
+Compute the random location entropy of the locations.
+
+The random location entropy of a location $$j$$ captures the degree of predictability of $$j$$ if each individual visits it with equal probability, and it is defined as:
+$$
+LE_{rand}(j) = log_2(N_j)
+$$
+where $$N_j$$ is the number of distinct individuals that visited location $$j$$.
+
+The result(output file) of this measure is as follows:
+
+```
+             lat         lng  random_location_entropy
+10286  39.739154 -104.984703                 6.129283
+49      0.000000    0.000000                 5.643856
+5991   37.774929 -122.419415                 5.523562
+12504  39.878664 -104.682105                 5.491853
+5377   37.615223 -122.389979                 5.247928
+```
+
+##### 2.2.3.2 Arguments
+
+- input_file (str) - The data file path to be processed.
+- output_file (str) - The file path where the processed data stored.
+
+##### 2.2.3.3 Returns
+
+- result (triple) - location tuple (lat,lng) of the place with highest random location entropy.
+
+#### 2.2.4 Uncorrelated Location Entropy
+
+##### 2.2.4.1 Description
+
+Compute the temporal-uncorrelated location entropy of the locations. 
+
+The temporal-uncorrelated location entropy $$LE_{unc}(j)$$ of a location $$j$$ is the historical probability that $$j$$ is visited by an individual $$u$$. Formally, it is defined as :
+$$
+LE_{unc}(j) = -\sum_{i=j}^{N_j} p_jlog_2(p_j)
+$$
+where $$N_j$$ is the number of distinct individuals that visited $$j$$ and $$p_j$$ is the historical probability that a visit to location $$j$$ is by individual $$u$$.
+
+The result(output file) of this measure is as follows:
+
+```
+             lat         lng  uncorrelated_location_entropy
+12504  39.878664 -104.682105                       3.415713
+5377   37.615223 -122.389979                       3.176950
+10286  39.739154 -104.984703                       3.118656
+12435  39.861656 -104.673177                       2.918413
+12361  39.848233 -104.675031                       2.899175
+```
+
+##### 2.2.4.2 Arguments
+
+- input_file (str) - The data file path to be processed.
+- output_file (str) - The file path where the processed data stored.
+
+##### 2.2.4.3 Returns
+
+- result (triple) - location tuple (lat,lng) of the place with highest uncorrelated location entropy.
+
+#### 2.2.5 Visits per location
+
+##### 2.2.5.1 Description
+
+Compute the number of visits to each location.
+
+The result(output file) of this measure is as follows:
+
+```
+         lat         lng  n_visits
+0  39.739154 -104.984703      3392
+1  37.580304 -122.343679      2248
+2  39.099275  -76.848306      1715
+3  39.762146 -104.982480      1442
+4  40.014986 -105.270546      1310
+```
+
+##### 2.2.5.2 Arguments
+
+- input_file (str) - The data file path to be processed.
+- output_file (str) - The file path where the processed data stored.
+
+##### 2.2.5.3 Returns
+
+- result (triple) - location tuple (lat,lng) of the place with most visits.
+
+#### 2.2.6 Visits per Time Unit
+
+##### 2.2.4.1 Description
+
+Compute the number of data points per time unit (hour).
+
+The result(output file) of this measure is as follows:
+
+```
+                           n_visits
+datetime
+2008-03-22 05:00:00+00:00         2
+2008-03-22 06:00:00+00:00         2
+2008-03-22 07:00:00+00:00         0
+2008-03-22 08:00:00+00:00         0
+2008-03-22 09:00:00+00:00         0
+```
+
+##### 2.2.4.2 Arguments
+
+- input_file (str) - The data file path to be processed.
+- output_file (str) - The file path where the processed data stored.
+
+##### 2.2.4.3 Returns
+
+- result (date time) - time with most visits.
 
