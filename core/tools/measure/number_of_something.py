@@ -8,7 +8,7 @@ def number_of_visits(
         output_file: str,
 ):
     """
-    Compute the number of visits (i.e., data points) for each individual in a TrajDataFrame.
+    Compute the number of visits (i.e., data points) for each individual.
 
     Parameters
     ----------
@@ -32,7 +32,7 @@ def number_of_locations(
         output_file: str,
 ):
     """
-    Compute the number of distinct locations visited by a set of individuals in a TrajDataFrame.
+    Compute the number of distinct locations visited by a set of individuals.
 
     Parameters
     ----------

@@ -9,7 +9,7 @@ def random_entropy(
         output_file: str,
 ):
     """
-    Compute the random entropy of a set of individuals in a TrajDataFrame. In this tool, we think every location is visited with equal probability, and the random entropy is defined as E_rand(u)=log2(N_u) , where N_u is the number of distinct locations visited by individual `u`. The more places the user went, the higher the value.
+    Compute the random entropy of a set of individuals. In this tool, we think every location is visited with equal probability, and the random entropy is defined as E_rand(u)=log2(N_u) , where N_u is the number of distinct locations visited by individual `u`. The more places the user went, the higher the value.
 
     Parameters
     ----------
@@ -34,7 +34,7 @@ def real_entropy(
         output_file: str,
 ):
     """
-    Compute the real entropy of a set of individuals in a TrajDataFrame. The real entropy depends not only on the frequency of visitation, but also the order in which the nodes were visited and the time spent at each location, thus capturing the full spatio-temporal order present in an `u`'s mobility patterns. he random entropy of an individual `u` is defined as
+    Compute the real entropy of a set of individuals. The real entropy depends not only on the frequency of visitation, but also the order in which the nodes were visited and the time spent at each location, thus capturing the full spatio-temporal order present in an `u`'s mobility patterns. he random entropy of an individual `u` is defined as
     $$
     E(u) = - \sum_{T'_u}P(T'_u)log_2[P(T_u^i)]
     $$
@@ -65,7 +65,7 @@ def uncorrelated_entropy(
         output_file: str,
 ):
     """
-    Compute the temporal-uncorrelated entropy of a set of individuals in a TrajDataFrame. The temporal-uncorrelated entropy of an individual `u` is defined as
+    Compute the temporal-uncorrelated entropy of a set of individuals. The temporal-uncorrelated entropy of an individual `u` is defined as
     $$
     E_{unc}(u) = - \sum_{j=1}^{N_u} p_u(j) log_2 p_u(j)
     $$

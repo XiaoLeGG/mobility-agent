@@ -7,7 +7,7 @@ def max_distance(
         output_file : str,
 ):
     """
-    Compute the maximum distance (in kilometers) traveled by a set of individuals in a TrajDataFrame. The maximum distance is defined as the maximum distance between two data point for every individual.
+    Compute the maximum distance (in kilometers) traveled by a set of individuals. The maximum distance is defined as the maximum distance between two data point for every individual.
 
     Parameters
     ----------
