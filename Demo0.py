@@ -1,5 +1,4 @@
 import os
-os.system("pip freeze > requirements.txt")
 import gradio as gr
 import random
 import pandas as pd
@@ -21,15 +20,19 @@ agent = initialize_agent(
 
 
 def single_shot(text_input, csv_input):
+    prompt = text_input
     # 指定要保存的文件名
-    filename = csv_input.name
-    # 检查文件是否已经存在，如果存在则不覆盖
-    if not os.path.exists(filename):
-        # 将文件内容写入到文件中
-        with open(filename, 'wb') as f:
-            f.write(csv_input)
+    if csv_input != None:
+        filename = csv_input.name
+        # 检查文件是否已经存在，如果存在则不覆盖
+        if not os.path.exists(filename):
+            # 将文件内容写入到文件中
+            with open(filename, 'wb') as f:
+                f.write(csv_input)
+        prompt += "The input file path is \"" + filename + "\""
     response = agent({
-        "input": (text_input+"The input file path is \""+filename+"\",please output a csv file as \"output.csv\".")
+        "input": (
+                    prompt+ "If there is a need to output a file as a result, please output a csv file as \"output.csv\". If there is no output, don't mention this.")
     })
     print(response["intermediate_steps"])
     df = pd.read_csv('output.csv')
@@ -59,6 +62,6 @@ with gr.Blocks() as demo:
     with gr.Accordion("Developer"):
         gr.Markdown("LunTianLe TaoYiCheng SuJunYou")
 
-    single_button.click(single_shot, inputs=[text_input, csv_input], outputs=[text_output, graph_output,csv_output])
+    single_button.click(single_shot, inputs=[text_input, csv_input], outputs=[text_output, graph_output, csv_output])
 
 demo.launch()
