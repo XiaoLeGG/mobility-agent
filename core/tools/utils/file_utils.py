@@ -10,4 +10,6 @@ def save_csv(
     frame : pd.DataFrame,
     output_file : str
 ):
-    frame.to_csv(output_file)
+    if frame.empty:
+        return
+    frame.to_csv(output_file, index=False)

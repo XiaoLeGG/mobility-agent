@@ -24,5 +24,6 @@ def jump_lengths(
     """
     tdf = fu.load_tdf(input_file)
     jldf = jl(tdf, show_progress=False, merge=False)
+    jldf = jldf.explode('jump_lengths')
     fu.save_csv(jldf, output_file)
     return jldf.to_numpy()

@@ -8,7 +8,7 @@ def mean_square_displacement(
         days: int = 0
 ):
     """
-    Compute the mean square displacement across the individuals. The mean squared displacement is a measure of the deviation of the position of an object with respect to a reference position over time. It is defined as: MSD = \langle |r(t) - r(0)| \\rangle = \frac{1}{N} \sum_{i = 1}^N |r^{(i)}(t) - r^{(i)}(0)|^2 where N is the number of individuals to be averaged, vector x^{(i)}(0) is the reference position of the i-th individual, and vector x^{(i)}(t) is the position of the i-th individual at time t.
+    Compute the mean square displacement across the individuals. The mean squared displacement is a measure of the deviation of the position of an object with respect to a reference position over time. It is defined as: MSD = \langle |r(t) - r(0)| \\rangle = \\frac{1}{N} \sum_{i = 1}^N |r^{(i)}(t) - r^{(i)}(0)|^2 where N is the number of individuals to be averaged, vector x^{(i)}(0) is the reference position of the i-th individual, and vector x^{(i)}(t) is the position of the i-th individual at time t.
 
     Warnings: The input TrajDataFrame must be sorted in ascending order by datetime.
 
