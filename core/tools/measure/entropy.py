@@ -1,6 +1,8 @@
 from skmob.measures.individual import random_entropy as rand_e
 from skmob.measures.individual import real_entropy as real_e
 from skmob.measures.individual import uncorrelated_entropy as une
+from skmob.measures.collective import random_location_entropy as rle
+from skmob.measures.collective import uncorrelated_location_entropy as ule
 from ..utils import file_utils as fu
 
 
@@ -87,3 +89,52 @@ def uncorrelated_entropy(
     une_pd = une(tdf,False, False,)
     fu.save_csv(une_pd, output_file)
     return une_pd.to_numpy()
+
+def random_location_entropy(
+        input_file: str,
+        output_file: str,
+):
+    """
+    Compute the random location entropy of the locations. The random location entropy of a location j captures the degree of predictability of j if each individual visits it with equal probability, and it is defined as: LE_{rand}(j) = log_2(N_j) where N_j is the number of distinct individuals that visited location j. The result(output file) of this measure is as follows:
+
+    Parameters
+    ----------
+    input_file : str
+        The data file path to be measured.
+    output_file : str
+        The file path where the measured data stored.
+
+    Returns
+    -------
+    ndarray
+        A 3-dimension numpy array indicating the result table with location (latitude and longitude) and the random entropy of this location. (sorted by last indice)
+    """
+    tdf = fu.load_tdf(input_file)
+    rle_pd = rle(tdf, False)
+    fu.save_csv(rle_pd, output_file)
+    return rle_pd.to_numpy()
+
+
+def uncorrelated_location_entropy(
+        input_file: str,
+        output_file: str,
+):
+    """
+    Compute the temporal-uncorrelated location entropy of the locations. The temporal-uncorrelated location entropy LE_{unc}(j) of a location j is the historical probability that j is visited by an individual $$u$$. Formally, it is defined as : LE_{unc}(j) = -\sum_{i=j}^{N_j} p_jlog_2(p_j) where N_j is the number of distinct individuals that visited j and p_j is the historical probability that a visit to location j is by individual u.
+
+    Parameters
+    ----------
+    input_file : str
+        The data file path to be measured.
+    output_file : str
+        The file path where the measured data stored.
+
+    Returns
+    -------
+    ndarray
+        A 3-dimension numpy array indicating the result table with location (latitude and longitude) and the uncorrelated entropy of this location. (sorted by last indice)
+    """
+    tdf = fu.load_tdf(input_file)
+    ule_pd = ule(tdf, False, False)
+    fu.save_csv(ule_pd, output_file)
+    return ule_pd.to_numpy()

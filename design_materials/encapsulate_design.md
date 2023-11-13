@@ -417,7 +417,7 @@ where $$N$$ is the number of individuals to be averaged, vector $$x^{(i)}(0)$$ i
 
 ##### 2.2.2.3 Returns
 
-- result (double) - the mse
+- result (double) - the msd value.
 
 #### 2.2.3 Random location entropy
 
