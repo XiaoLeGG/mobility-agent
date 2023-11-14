@@ -7,7 +7,7 @@ def wait_time(
         output_file: str,
 ):
     """
-    Compute the waiting times (in seconds) between the movements of each individual. The wait time is  defined as the time between two consecutive points.
+    Compute the waiting times (in seconds) between the movements of each individual. The wait time is defined as Time difference between two adjacent data points.
 
     Parameters
     ----------

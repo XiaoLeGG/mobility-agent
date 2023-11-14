@@ -8,7 +8,7 @@ def visits_per_location(
         output_file: str,
 ):
     """
-    Compute the number of visits to each location.
+    Compute how many times of each location be visited
 
     Parameters
     input_file : str
@@ -19,7 +19,7 @@ def visits_per_location(
     Returns
     -------
     ndArray
-        A 3-dimension numpy array indicating the result table with location (latitude and longitude) and the number of visits of this location. (sorted by last indice)
+        A 3-dimension numpy array indicating the result table with location (latitude and longitude) and the times of location be visited. (sorted by last indice)
     """
     tdf = fu.load_tdf(input_file)
     vpl_df = vpl(tdf)
@@ -27,12 +27,13 @@ def visits_per_location(
     return vpl_df.to_numpy()
 
 
+
 def visits_per_time_unit(
         input_file: str,
         output_file: str,
 ):
     """
-    Compute the number of data points per time unit (hour).
+    Compute the number of data points per time unit (in one hour).
 
     Parameters
     input_file : str

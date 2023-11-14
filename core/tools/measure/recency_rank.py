@@ -8,7 +8,7 @@ def recency_rank(
 
 ):
     """
-    Compute the recency rank of the location of a set of individuals. The recency rank K_s(r_i>) of a location r_i of an individual u is K_s(r_i)=1 if location ri is the last visited location, it is K_s(r_i)=2 if r_i is the second-lastvisited location, and so on.
+    Compute the recency rank of the location of a set of individuals. The recency rank K_s(r_i) of a location r_i of an individual u is K_s(r_i)=1 if location ri is the last visited location, it is K_s(r_i)=2 if r_i is the second-last visited location, and so on.
 
     Parameters
     ----------
