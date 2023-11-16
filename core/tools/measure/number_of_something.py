@@ -8,7 +8,7 @@ def number_of_visits(
         output_file: str,
 ):
     """
-    Compute the number of visits (i.e., data points) for each individual.
+    compute the number of data points for each individuals
 
     Parameters
     ----------
