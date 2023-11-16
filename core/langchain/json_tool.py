@@ -11,13 +11,22 @@ class JsonSchema(BaseModel):
     
 class JsonTool(BaseTool):
     name = "json"
-    description = "Store the JSON format data in the output file."
+    description = str(
+        "Store the JSON format data in the output file."
+        "Notice that the content must be JSON formated data!!!"
+    )
     args_schema: Type[JsonSchema] = JsonSchema
     def _run(
             self,
             content: str,
             output_file: str
-    ) -> int:
+    ) -> str:
         """Store json."""
-        json_data = json.loads(content)
-        json.dump(json_data, open(output_file, "w"))
+        try:
+            json_data = json.loads(content)
+            json.dump(json_data, open(output_file, "w"))
+            return "Successfully wrote json."
+        except Exception as e:
+            return "Error occurs:\n" + str(e)
+
+            

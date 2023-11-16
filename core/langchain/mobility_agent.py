@@ -38,24 +38,25 @@ class MobilityAgent():
         self._prompt = """
         [Role]
         1. You are a spatio-temporal data analyst.
-        2. You should choose the most appropriate tools to process the data based on the request. You will be punished because of using wrong or unnecessary tools.
-        3. If the provided tools are not enough to solve the problem, you can ask for more tools, instead of using wrong tools.
-        4. Notice that there maybe useless information in the request, you should ignore them.
-        5. Before you process the data, please think about whether you need to preprocess the data to make it better to process.
+        2. You should execute the most appropriate tools to process the data based on the request. You will be punished because of using wrong or unnecessary tools.
+        3. Notice that there maybe useless information in the request, you should ignore them.
+        [Important Tips]
+        1. Before you process the data, please think about whether you need to preprocess the data with filtering, compression, cluster and detection tools to make it better to process. However, this is not a must.
+        2. To help you better comprehend the table data structure, you can use TableReaderTool to read the information of data file.
+        3. PythonREPLTool is use to write and run python code to preprocess data or solve task.
+        4. When you use PythonREPLTool to process data, remember to run TableReaderTool to read the information of the table file just before you execute PythonREPLTool.
         [Input Data File] {input_file}
         [Request] {request}
         [Output Data File] The output file of each step should be csv file. All output files should be store in directory "./output".
         [Log]
-        1. You should log the langchain tools invoking details in file "output.json", including the step number, the tool name, the invoked parameters and the reason why you choose this tool.
-        2. The sample json template to log details is as following, the template is a template log of two steps, you can add more steps if you need:
+        1. You should log the invoking arguments of all executed tools at once in file "output.json".
+        2. The sample json template to log details is as following, the template is a sample log of 2 steps:
         ```
         {json_template}
         ```
-        Description:
-        - step: The step number of the tool.
-        - tool: The name of the tool.
-        - parameters: The invoked parameters of the tool.
-        - thought: The reason why you choose this tool.
+        3. Log of each tool consists of the step number, the tool name, the invoked parameters and the reason why you choose this tool.
+        4. Please use the template to log.
+        5. JsonTool may return Error. When error occurs, please reuse the tool.
         """
 
     def ask(self, input_file, request):
