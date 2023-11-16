@@ -41,12 +41,13 @@ class MobilityAgent():
         2. You should choose the most appropriate tools to process the data based on the request. You will be punished because of using wrong or unnecessary tools.
         3. If the provided tools are not enough to solve the problem, you can ask for more tools, instead of using wrong tools.
         4. Notice that there maybe useless information in the request, you should ignore them.
+        5. Before you process the data, please think about whether you need to preprocess the data to make it better to process.
         [Input Data File] {input_file}
         [Request] {request}
         [Output Data File] The output file of each step should be csv file. All output files should be store in directory "./output".
-        [Last Step]
-        1. You should invoke json tool at last to store all the details. The output file should be "output.json".
-        2. The sample json template to store details is as following:
+        [Log]
+        1. You should log the langchain tools invoking details in file "output.json", including the step number, the tool name, the invoked parameters and the reason why you choose this tool.
+        2. The sample json template to log details is as following, the template is a template log of two steps, you can add more steps if you need:
         ```
         {json_template}
         ```
@@ -55,7 +56,6 @@ class MobilityAgent():
         - tool: The name of the tool.
         - parameters: The invoked parameters of the tool.
         - thought: The reason why you choose this tool.
-        3. You should store all steps in one json file as same as the json template above.
         """
 
     def ask(self, input_file, request):
