@@ -1,5 +1,7 @@
 from .compression_tool import CompressionTool
 from .filtering_tool import FilteringTool
+from .plot_trajectory import PlotTrajectoryTool, PlotScatterTool, PlotTrajectoryAndScatterTool, PlotHeatmapDensityTool, \
+    PlotHeatmapTool, PlotDynamicTrajectoryTool
 from .stop_detection_tool import StopDetectionTool
 from .json_tool import JsonTool
 from .home_location_tool import HomeLocationTool
@@ -23,4 +25,13 @@ def collect_tools():
             JumpLengthsTool(),
             RecencyRankTool(),
             TableReaderTool(),
-            PythonREPLTool()]
+            PythonREPLTool(),
+            PlotTrajectoryTool(),
+            PlotScatterTool(),
+            PlotHeatmapDensityTool(),
+            PlotHeatmapTool(),
+            PlotDynamicTrajectoryTool(),
+            PlotTrajectoryAndScatterTool()
+            ]
+
+
