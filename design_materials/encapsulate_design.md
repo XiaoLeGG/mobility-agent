@@ -535,8 +535,73 @@ A Mobility Diary Learner (MDL) is a data-driven algorithm to compute a mobility 
 
 
 
+## 4. Visualization
 
+#### 4.1 Plot Trajectory
 
+##### 4.1.1 Description
 
+This function plots the trajectories on a plotly map.
 
+##### 4.1.2 Argument
 
+- input_file (str) - The data file path to be processed.(must contain "lat", "lng" rows)
+- output_file (str) - The output graph file path(a json file).
+
+#### 4.2 Plot Scatter
+
+##### 4.2.1 Description
+
+This function plots the scatter points on a plotly map.
+
+##### 4.2.2 Argument
+
+- input_file (str) - The data file path to be processed.(must contain "lat", "lng" rows)
+- output_file (str) - The output graph file path(a json file).
+
+#### 4.3 Plot Trajectory and Scatter
+
+##### 4.3.1 Description
+
+This function plots the trajectories and scatter points on a plotly map.
+
+##### 4.3.2 Argument
+
+- trajectory_input_file (str) - The trajectory data file path to be processed.(must contain "lat", "lng" rows)
+- scatter_input_file (str) - The scatter points data file path to be processed.(must contain "lat", "lng" rows)
+- output_file (str) - The output graph file path(a json file).
+
+#### 4.4 Plot Dynamic Trajectory
+
+##### 4.4.1 Description
+
+This function dynamically plots the trajectories on an interactively plotly map.
+
+##### 4.4.2 Argument
+
+- input_file (str) - The data file path to be processed.(must contain "lat", "lng" rows)
+- output_file (str) - The output graph file path(a json file).
+
+#### 4.5 Plot Heatmap Density
+
+##### 4.5.1 Description
+
+This function plots the heatmap from a series of trajectories on a plotly map.
+This function requires the density values to be stored in the input file.
+
+##### 4.5.2 Argument
+
+- input_file (str) - The data file path to be processed.(must contain "lat", "lng", "density" rows)
+- output_file (str) - The output graph file path(a json file).
+
+#### 4.6 Plot Heatmap
+
+##### 4.6.1 Description
+
+This function plots the heatmap from a series of trajectories on a plotly map.
+This function calculates the density values from the intensity of points.
+
+##### 4.6.2 Argument
+
+- input_file (str) - The data file path to be processed.(must contain "lat", "lng" rows)
+- output_file (str) - The output graph file path(a json file).
