@@ -526,14 +526,39 @@ A Mobility Diary Learner (MDL) is a data-driven algorithm to compute a mobility 
 - input_file (str) - The input data file path(the data must preprocessed by cluster)
 - output_file (str) - The file path where store generated data.
 - n_individuals(int) - the number of individual in the input data
-- start_time(datetime) -  the starting date of the generation.
+- start_time(datetime) - the starting date of the generation.
 - diary_length (int) – the length of the diary in hours.
 
 ##### 3.1.3 Return
 
-- result (ndarray) - A 2-dimension numpy array indicating the result table with time and the cluster_id. 
+- result (ndarray) - A 2-dimension numpy array indicating the result table with time and the cluster_id.
 
+#### 3.2 Gravity Model
 
+##### 3.2.1 Description
+
+simulate or predict trajectory data from the input flow data by using Gravity Model.
+
+The Gravity model of human migration posits that the probability \(T_{ij}\) of moving from location \(i\) to \(j\) is proportional to \(\frac{P_i P_j}{r_{ij}}\), where \(P_i\) and \(P_j\) are the populations of locations \(i\) and \(j\), and \(r_{ij}\) is the distance between them. This model assumes that the number of trips leaving \(i\) is proportional to its population, the attractiveness of \(j\) is proportional to its population, and there is a cost effect in terms of distance traveled.
+
+A generalized form of this model is \(T_{ij} = K m_i m_j f(r_{ij})\), where \(K\) is a constant, \(m_i\) and \(m_j\) relate to the number of trips, and \(f(r_{ij})\) is a decreasing function of distance.
+
+Constrained gravity models address limitations. In a singly constrained model, the number of people originating from \(i\) is a known quantity \(O_i\), and the model estimates the destination:
+
+\[ T_{ij} = K_i O_i m_j f(r_{ij}) = O_i \frac{m_i f(r_{ij})}{\sum_k m_k f(r_{ik})} \]
+
+Proportionality constants \(K_i\) depend on the origin's location. A doubly-constrained model, fixing the total travelers arriving at \(j\) as \(D_j\), calculates:
+
+\[ T_{ij} = K_i O_i L_j D_j f(r_{ij}) \]
+
+##### 3.2.2 Argument
+
+- input_file (str) - The input data file path
+- output_file (str) - The file path where store generated data.
+
+##### 3.2.3 Return
+
+- result (ndarray) - A 3-dimension numpy array indicating the result table with origin area, destination area and flow.
 
 ## 4. Visualization
 
@@ -561,7 +586,7 @@ This function plots the scatter points on a plotly map.
 
 #### 4.3 Plot Trajectory and Scatter
 
-##### 4.3.1 Description
+##### .3.1 Description
 
 This function plots the trajectories and scatter points on a plotly map.
 
@@ -586,8 +611,7 @@ This function dynamically plots the trajectories on an interactively plotly map.
 
 ##### 4.5.1 Description
 
-This function plots the heatmap from a series of trajectories on a plotly map.
-This function requires the density values to be stored in the input file.
+This function plots the heatmap from a series of trajectories on a plotly map. This function requires the density values to be stored in the input file.
 
 ##### 4.5.2 Argument
 
@@ -598,8 +622,7 @@ This function requires the density values to be stored in the input file.
 
 ##### 4.6.1 Description
 
-This function plots the heatmap from a series of trajectories on a plotly map.
-This function calculates the density values from the intensity of points.
+This function plots the heatmap from a series of trajectories on a plotly map. This function calculates the density values from the intensity of points.
 
 ##### 4.6.2 Argument
 
