@@ -15,6 +15,12 @@ def load_fdf(
     return FlowDataFrame.from_file(input_file, origin='origin', destination='destination', datetime='datetime')
 
 
+def load_df(
+        input_file: str
+):
+    return pd.read_csv(input_file)
+
+
 def save_csv(
         frame: pd.DataFrame,
         output_file: str
