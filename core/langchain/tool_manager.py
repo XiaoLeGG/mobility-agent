@@ -11,10 +11,12 @@ from .jump_lengths_tool import JumpLengthsTool
 from .recency_rank_tool import RecencyRankTool
 from .table_reader_tool import TableReaderTool
 from langchain_experimental.tools.python.tool import PythonREPLTool
+from typing import List
+from langchain.tools import BaseTool
 
 
 def collect_tools():
-    return [CompressionTool(),
+    tools: List[BaseTool] = [CompressionTool(),
             FilteringTool(),
             StopDetectionTool(),
             HomeLocationTool(),
@@ -33,5 +35,8 @@ def collect_tools():
             PlotDynamicTrajectoryTool(),
             PlotTrajectoryAndScatterTool()
             ]
+    for i in range(len(tools)):
+        tools[i].handle_tool_error=lambda e: "Error occurs, you may check the existance of file and use table reader to check the data: " + str(e)
+    return tools
 
 
