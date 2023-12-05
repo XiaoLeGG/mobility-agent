@@ -102,7 +102,7 @@ class MobilityAgent():
         
         """
         self._is_started = True
-        response = self._agent.run(self._prompt.format(input_file=input_file, json_template=self._json_template))
+        response = self._agent.run(self._prompt.format(input_file=input_file))
         return response
 
     def ask(self, request: str):
