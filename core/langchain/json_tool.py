@@ -12,8 +12,7 @@ class JsonSchema(BaseModel):
 class JsonTool(BaseTool):
     name = "json"
     description = str(
-        "Store the JSON format data in the output file."
-        "Notice that the content must be JSON formated data!!!"
+        "Store json."
     )
     args_schema: Type[JsonSchema] = JsonSchema
     def _run(

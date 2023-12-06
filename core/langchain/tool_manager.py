@@ -10,6 +10,7 @@ from .gyration_tool import RadiusGyrationTool, KRadiusGyrationTool
 from .jump_lengths_tool import JumpLengthsTool
 from .recency_rank_tool import RecencyRankTool
 from .table_reader_tool import TableReaderTool
+from .geo_decode_tool import GeoDecodeTool
 from langchain_experimental.tools.python.tool import PythonREPLTool
 from typing import List
 from langchain.tools import BaseTool
@@ -33,7 +34,8 @@ def collect_tools():
             PlotHeatmapDensityTool(),
             PlotHeatmapTool(),
             PlotDynamicTrajectoryTool(),
-            PlotTrajectoryAndScatterTool()
+            PlotTrajectoryAndScatterTool(),
+            GeoDecodeTool()
             ]
     for i in range(len(tools)):
         tools[i].handle_tool_error=lambda e: "Error occurs, you may check the existance of file and use table reader to check the data: " + str(e)
