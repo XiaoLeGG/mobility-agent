@@ -4,7 +4,6 @@ from langchain.callbacks.base import BaseCallbackHandler
 from langchain.schema import AgentAction, AgentFinish, LLMResult
 import json
 
-
 class MACallbackHandler(BaseCallbackHandler):
     """Callback Handler for Mobility Agent."""
 
@@ -74,6 +73,7 @@ class MACallbackHandler(BaseCallbackHandler):
     ) -> None:
         pass
 
+
     def on_agent_finish(
         self, finish: AgentFinish, color: Optional[str] = None, **kwargs: Any
     ) -> None:
@@ -83,5 +83,9 @@ class MACallbackHandler(BaseCallbackHandler):
             jsonStr += jsonStrAction + ","
         jsonStr = jsonStr[:-1]
         jsonStr += "]"
-        json.dump(jsonStr, open("output/output.json", "w"))
+        if len(self.action_list) == 0:
+            jsonStr = "[]"
+        formattedJson = json.dumps(json.loads(jsonStr), indent=4)
+        with open("output/output.json", "w") as file:
+            file.write(formattedJson)
             

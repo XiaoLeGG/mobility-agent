@@ -15,34 +15,38 @@ class MobilityAgent():
         self._llm = ChatOpenAI(temperature=0, model="gpt-4")
         self._tools = collect_tools()
 
-        self._json_template = """
-        {
-            "step": 1,
-            "tool": "tool1",
-            "parameters": {
-                "args1": "value1",
-                "args2": "value2"
-            },
-            "thought": "reason",
-        },
-        {
-            "step": 2,
-            "tool": "tool2",
-            "parameters": {
-                "args1": "value1",
-                "args2": "value2"
-            },
-            "thought": "reason",
-        },
-        """
+        # self._json_template = """
+        # {
+        #     "step": 1,
+        #     "tool": "tool1",
+        #     "parameters": {
+        #         "args1": "value1",
+        #         "args2": "value2"
+        #     },
+        #     "thought": "reason",
+        # },
+        # {
+        #     "step": 2,
+        #     "tool": "tool2",
+        #     "parameters": {
+        #         "args1": "value1",
+        #         "args2": "value2"
+        #     },
+        #     "thought": "reason",
+        # },
+        # """
 
         self._prompt = """Here are some information you need to know before our work:
-        [ROLE] You are a spatio-temporal data analyst. You are knowledged about the mobility data analysing.
-        [HANDLING STEPS]
-        1. Analyse the main idea of the request and the data features mentioned in the request.
-        2. Think about how to solve the request and make a plan.
-        3. Carefully choosing the parameters of each tool in the plan with considering the data features.
-        4. Execute the plan with the tools to solve the request.
+        [ROLE] You are a spatio-temporal data analyst. You are knowledged about the mobility data analysing. You are now chatting with a user.
+        [REQUEST TYPES]
+        1. [DATA PROCESSING, ANALYSING AND VISUALIZATION] You need to process the data with tools and give feedback to the user.
+        2. [KNOWLEDGE QUERY] You need to answer the question with knowledge and give feedback to the user.
+        [HANDLING STEPS WHEN NEW REQUEST COMES]
+        1. Read the request.
+        2. Analyse the situation, problem and attention point of the request.
+        3. Determine the request type.
+        4. Handle the request based on different request types.
+        5. For ambiguous request, you can ask for more information before you handle the request.
         [OUTPUT DATA FILE] Every output file should be csv file.
         [OUTPUT FOLDER] "output/"
         [INITIAL DATA FILE] {input_file}
@@ -54,6 +58,8 @@ class MobilityAgent():
         5. The seperate symbols of the data file is ",".
         [MISTAKES YOU MAY MAKE]
         1. Overestimate the function of tools. Each tool should have been considered its parameters for better estimating its function when you choose it.
+        
+        Begin!
         """
 
         # self._suffix="""
