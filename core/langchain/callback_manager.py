@@ -3,13 +3,15 @@ from typing import Any, Dict, List, Optional
 from langchain.callbacks.base import BaseCallbackHandler
 from langchain.schema import AgentAction, AgentFinish, LLMResult
 import json
+import os
 
 class MACallbackHandler(BaseCallbackHandler):
     """Callback Handler for Mobility Agent."""
 
     action_list: list[AgentAction]
 
-    def __init__(self,) -> None:
+    def __init__(self, agent) -> None:
+        self._agent = agent
         self.action_list = []
         pass
 
@@ -86,6 +88,6 @@ class MACallbackHandler(BaseCallbackHandler):
         if len(self.action_list) == 0:
             jsonStr = "[]"
         formattedJson = json.dumps(json.loads(jsonStr), indent=4)
-        with open("output/output.json", "w") as file:
+        with open(os.path.join(self._agent._output_folder, f"output_{ self._agent._conversation_count }.json"), "w") as file:
             file.write(formattedJson)
             

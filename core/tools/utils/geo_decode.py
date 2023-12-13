@@ -2,7 +2,7 @@ import sqlite3
 import pandas as pd
 
 
-def decode(latitude : float, longitude : float) -> str:
+def decode(latitude : float, longitude : float) -> tuple:
     conn = sqlite3.connect('beijing_poi.db')
 
     cursor = conn.cursor()
@@ -19,4 +19,4 @@ def decode(latitude : float, longitude : float) -> str:
 
     conn.close()
 
-    return poi[0] + "-" + poi[1] + "-" + poi[2] + "-" + poi[5] + "," + poi[6] + "," + poi[7]
+    return poi

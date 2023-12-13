@@ -11,7 +11,7 @@ from .jump_lengths_tool import JumpLengthsTool
 from .recency_rank_tool import RecencyRankTool
 from .table_reader_tool import TableReaderTool
 from .geo_decode_tool import GeoDecodeTool
-from langchain_experimental.tools.python.tool import PythonREPLTool
+from .python_repl_tool import CustomPythonREPLTool
 from typing import List
 from langchain.tools import BaseTool
 
@@ -28,7 +28,7 @@ def collect_tools():
             JumpLengthsTool(),
             RecencyRankTool(),
             TableReaderTool(),
-            PythonREPLTool(),
+            CustomPythonREPLTool(),
             PlotTrajectoryTool(),
             PlotScatterTool(),
             PlotHeatmapDensityTool(),

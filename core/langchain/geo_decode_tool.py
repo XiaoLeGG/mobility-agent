@@ -17,8 +17,7 @@ class GeoDecodeTool(BaseTool):
     description = str(
         "Transfer the latitude and longitude to specific address with its relative information."
         "This can help you to better understand the location and wrap a range of location to a specific address."
-        "This tool add a new column named 'address_info' to the data table."
-        "The format of the address_info is 'address_name-function_type-class-province,city,district'."
+        "This tool add 6 new columns named 'address_name', 'function_type', 'class', 'province', 'city' and 'district' to the data table."
     )
     args_schema: Type[GeoDecodeSchema] = GeoDecodeSchema
     def _run(
@@ -29,5 +28,12 @@ class GeoDecodeTool(BaseTool):
         """Use the tool."""
         data = fu.load_tdf(input_file)
         for i in range(len(data)):
-            data.loc[i, 'address_info'] = geo_decode(data.loc[i, 'lat'], data.loc[i, 'lng'])
+            result = geo_decode.decode(data.loc[i, 'lat'], data.loc[i, 'lng'])
+            data.loc[i, 'address_name'] = result[0]
+            data.loc[i, 'function_type'] = result[1]
+            data.loc[i, 'class'] = result[2]
+            data.loc[i, 'province'] = result[5]
+            data.loc[i, 'city'] = result[6]
+            data.loc[i, 'district'] = result[7]
+            
         fu.save_csv(data, output_file)

@@ -7,6 +7,7 @@ class TableReaderSchema(BaseModel):
     class Config:
         arbitrary_types_allowed = True
     input_file: str = Field(description="The csv file to read information.")
+    select_records: int = Field(description="The number of head records to be selected. If not specified, 5 records will be selected. If the number is larger than the number of records, all records will be selected.", default=5)
     
 class TableReaderTool(BaseTool):
     name = "table_reader"
@@ -14,7 +15,8 @@ class TableReaderTool(BaseTool):
     args_schema: Type[TableReaderSchema] = TableReaderSchema
     def _run(
             self,
-            input_file: str
+            input_file: str,
+            select_records: int = 5,
     ) -> str:
         """Read table information."""
         df = pd.read_csv(input_file)
@@ -24,5 +26,5 @@ class TableReaderTool(BaseTool):
             result += f"{i}. Column Name: {column}, Data Type: {dtype}\n"
         result += f"Number of records: {len(df)}\n"
         if len(df) > 0:
-            result += f"Head records:\n{df.head()}\n"
+            result += f"Head records:\n{df.head(select_records)}\n"
         return result
