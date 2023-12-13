@@ -1,6 +1,6 @@
 from langchain.tools import BaseTool
 from pydantic import BaseModel, Field
-from typing import Optional, Type
+from typing import  Type
 from ..tools.plot import plot_trajectory, plot_scatter, plot_trajectory_and_scatter, plot_dynamic_trajectory, \
     plot_heatmap, plot_heatmap_density
 
@@ -15,7 +15,9 @@ class PlotTrajectorySchema(BaseModel):
 
 class PlotTrajectoryTool(BaseTool):
     name = "plot_trajectory"
-    description = "Plot the trajectories on a plotly map."
+    description = ("This function plots the trajectories on a plotly map, with different trajectories "
+                   "for each unique 'uid' in the data. If 'uid' column is not present, it plots all data"
+                   "as a single set of points.")
     args_schema: Type[PlotTrajectorySchema] = PlotTrajectorySchema
 
     def _run(
@@ -37,7 +39,9 @@ class PlotScatterSchema(BaseModel):
 
 class PlotScatterTool(BaseTool):
     name = "plot_scatter"
-    description = "Plot the scatter points on a plotly map."
+    description = ("This function plots the scatter points on a plotly map, with different points"
+                   "for each unique 'uid' in the data. If 'uid' column is not present, it plots all data"
+                   "as a single set of points.")
     args_schema: Type[PlotScatterSchema] = PlotScatterSchema
 
     def _run(
@@ -62,7 +66,9 @@ class PlotTrajectoryAndScatterSchema(BaseModel):
 
 class PlotTrajectoryAndScatterTool(BaseTool):
     name = "plot_trajectory_and_scatter"
-    description = "Plot the trajectories and scatter points on a plotly map."
+    description = ("Plot the trajectories and scatter points on a plotly map, with different points "
+                   "for each unique 'uid' in the data. If 'uid' column is not present, it plots all data"
+                   "as a single set of points.")
     args_schema: Type[PlotTrajectoryAndScatterSchema] = PlotTrajectoryAndScatterSchema
 
     def _run(
