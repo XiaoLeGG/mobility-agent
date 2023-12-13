@@ -9,10 +9,13 @@ class MACallbackHandler(BaseCallbackHandler):
     """Callback Handler for Mobility Agent."""
 
     action_list: list[AgentAction]
+    output_list: list[str]
+
 
     def __init__(self, agent) -> None:
         self._agent = agent
         self.action_list = []
+        self.output_list = []
         pass
 
     def on_llm_start(
@@ -33,6 +36,7 @@ class MACallbackHandler(BaseCallbackHandler):
         self, serialized: Dict[str, Any], inputs: Dict[str, Any], **kwargs: Any
     ) -> None:
         self.action_list = []
+        self.output_list = []
 
     def on_chain_end(self, outputs: Dict[str, Any], **kwargs: Any) -> None:
         pass
@@ -79,14 +83,15 @@ class MACallbackHandler(BaseCallbackHandler):
     def on_agent_finish(
         self, finish: AgentFinish, color: Optional[str] = None, **kwargs: Any
     ) -> None:
-        jsonStr = "["
+        jsonStr = "{\"action_list\":["
         for action in self.action_list:
             jsonStrAction = action.json()
             jsonStr += jsonStrAction + ","
         jsonStr = jsonStr[:-1]
         jsonStr += "]"
         if len(self.action_list) == 0:
-            jsonStr = "[]"
+            jsonStr = "{\"action_list\":[]"
+        jsonStr += ",\"output\":" + json.dumps(finish.log) + "}"
         formattedJson = json.dumps(json.loads(jsonStr), indent=4)
         with open(os.path.join(self._agent._output_folder, f"output_{ self._agent._conversation_count }.json"), "w") as file:
             file.write(formattedJson)
