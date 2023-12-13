@@ -32,7 +32,7 @@ class MACallbackHandler(BaseCallbackHandler):
     def on_chain_start(
         self, serialized: Dict[str, Any], inputs: Dict[str, Any], **kwargs: Any
     ) -> None:
-        pass
+        self.action_list = []
 
     def on_chain_end(self, outputs: Dict[str, Any], **kwargs: Any) -> None:
         pass
