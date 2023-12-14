@@ -1,10 +1,14 @@
 import plotly.graph_objs as go
 import pandas as pd
+import json
 
-def plot_trajectory(input_file: str, output_file: str):
+
+def plot_trajectory(input_file: str, output_file: str, existing_map_file: str = None):
     """
     This function plots the trajectories on a plotly map, with different trajectories
-    for each unique 'uid' in the data. If 'uid' column is not present, it plots all data
+    for each unique 'uid' in the data.
+    If existing_map_file is provided, it loads the existing map and adds the new trajectories.(else is None)
+    If 'uid' column is not present, it plots all data
     as a single trajectory.
 
     Parameters
@@ -13,36 +17,32 @@ def plot_trajectory(input_file: str, output_file: str):
         The data file path to be processed.
     output_file : str
         The output graph file path (a json file).
+    existing_map_file : str
+        The existing map file path (a json file).
     """
+    # Load the CSV data
     tdf = pd.read_csv(input_file)
 
-    # Check if 'uid' column exists in the DataFrame
+    # Initialize traces list
+    traces = []
+
+    # Check if 'uid' column exists and create traces accordingly
     if 'uid' in tdf.columns:
-        # Group the DataFrame by 'uid' if 'uid' column exists
         grouped = tdf.groupby('uid')
-        traces = []
-
-        # Loop through each group and create a Scattermapbox trace
         for uid, group in grouped:
-            lon = group['lng']  # Assuming longitude is stored in 'lng'
-            lat = group['lat']  # Assuming latitude is stored in 'lat'
-
             trace = go.Scattermapbox(
-                lon=lon,
-                lat=lat,
+                lon=group['lng'],
+                lat=group['lat'],
                 mode='lines+markers',
                 marker=dict(size=5),
                 line=dict(width=3),
-                name=f"UID: {uid}"  # Label each trace with the corresponding 'uid'
+                name=f"UID: {uid}",
             )
             traces.append(trace)
     else:
-        # If 'uid' column does not exist, plot all data as a single trajectory
-        lon = tdf['lng']
-        lat = tdf['lat']
         trace = go.Scattermapbox(
-            lon=lon,
-            lat=lat,
+            lon=tdf['lng'],
+            lat=tdf['lat'],
             mode='lines+markers',
             marker=dict(size=5),
             line=dict(width=3),
@@ -50,26 +50,27 @@ def plot_trajectory(input_file: str, output_file: str):
         )
         traces = [trace]
 
-    # Define layout with Mapbox settings
-    layout = go.Layout(
-        mapbox=dict(
-            style="open-street-map",
-            bearing=0,
-            center=dict(
-                lat=lat.mean(),
-                lon=lon.mean()
+    # Load existing map if provided
+    if existing_map_file and existing_map_file != 'null':
+        with open(existing_map_file, 'r') as f:
+            existing_map_data = json.load(f)
+        fig = go.Figure(data=existing_map_data['data'] + traces, layout=existing_map_data['layout'])
+    else:
+        # Create new map figure with traces
+        layout = go.Layout(
+            mapbox=dict(
+                style="open-street-map",
+                bearing=0,
+                center=dict(
+                    lat=tdf['lat'].mean(),
+                    lon=tdf['lng'].mean()
+                ),
+                pitch=0,
+                zoom=10
             ),
-            pitch=0,
-            zoom=10
-        ),
-        showlegend=True
-    )
+            showlegend=True
+        )
+        fig = go.Figure(data=traces, layout=layout)
 
-    # Create a Figure with data and layout
-    fig = go.Figure(data=traces, layout=layout)
-
-    # Write the figure to a JSON file
+    # Save the updated map to the output JSON file
     fig.write_json(output_file)
-
-# Example usage:
-# plot_trajectory('input_data.csv', 'output_data.json')

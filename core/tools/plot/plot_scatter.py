@@ -1,11 +1,14 @@
 import plotly.graph_objs as go
 import pandas as pd
+import json
 
-def plot_scatter(input_file: str, output_file: str):
+
+def plot_scatter(input_file: str, output_file: str, existing_map_file: str = None):
     """
     This function plots the scatter points on a plotly map, with different points
-    for each unique 'uid' in the data. If 'uid' column is not present, it plots all data
-    as a single set of points.
+    for each unique 'uid' in the data.
+    If existing_map_file is provided, it loads the existing map and adds the new trajectories.(else is None)
+    If 'uid' column is not present, it plots all data as a single set of points.
 
     Parameters
     ----------
@@ -13,63 +16,58 @@ def plot_scatter(input_file: str, output_file: str):
         The data file path to be processed.
     output_file : str
         The output graph file path (a json file).
+    existing_map_file : str, optional
+        The path to an existing map file to update with new scatter points (default is None).
     """
     tdf = pd.read_csv(input_file)
 
     # Check if 'uid' column exists in the DataFrame
     if 'uid' in tdf.columns:
-        # Group the DataFrame by 'uid' if 'uid' column exists
         grouped = tdf.groupby('uid')
         traces = []
 
-        # Loop through each group and create a Scattermapbox trace
         for uid, group in grouped:
-            lon = group['lng']  # Assuming longitude is stored in 'lng'
-            lat = group['lat']  # Assuming latitude is stored in 'lat'
-
             trace = go.Scattermapbox(
-                lon=lon,
-                lat=lat,
+                lon=group['lng'],
+                lat=group['lat'],
                 mode='markers',
                 marker=dict(size=9),
-                name=f"UID: {uid}"  # Label each trace with the corresponding 'uid'
+                name=f"UID: {uid}"
             )
             traces.append(trace)
     else:
-        # If 'uid' column does not exist, plot all data as a single set of points
-        lon = tdf['lng']
-        lat = tdf['lat']
         trace = go.Scattermapbox(
-            lon=lon,
-            lat=lat,
+            lon=tdf['lng'],
+            lat=tdf['lat'],
             mode='markers',
             marker=dict(size=9, color='red'),
             name="All Points"
         )
         traces = [trace]
 
-    # Define layout with Mapbox settings
-    layout = go.Layout(
-        title='Scatter Plot with Mapbox',
-        mapbox=dict(
-            style="open-street-map",
-            bearing=0,
-            center=dict(
-                lat=lat.mean(),
-                lon=lon.mean()
+    # If an existing map file is provided, load it and add the new traces
+    if existing_map_file:
+        with open(existing_map_file, 'r') as f:
+            existing_map_data = json.load(f)
+        fig = go.Figure(data=existing_map_data['data'] + traces, layout=existing_map_data['layout'])
+    else:
+        # Define layout with Mapbox settings
+        layout = go.Layout(
+            title='Scatter Plot with Mapbox',
+            mapbox=dict(
+                style="open-street-map",
+                bearing=0,
+                center=dict(
+                    lat=tdf['lat'].mean(),
+                    lon=tdf['lng'].mean()
+                ),
+                pitch=0,
+                zoom=10
             ),
-            pitch=0,
-            zoom=10
-        ),
-        autosize=True,
-        showlegend=True
-    )
-
-    # Create a Figure with data and layout
-    fig = go.Figure(data=traces, layout=layout)
+            autosize=True,
+            showlegend=True
+        )
+        fig = go.Figure(data=traces, layout=layout)
 
     # Write the figure to a JSON file
     fig.write_json(output_file)
-
-# Example usage:
-# plot_scatter('input_data.csv', 'output_data.json')

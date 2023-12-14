@@ -1,14 +1,18 @@
 import pandas as pd
 import plotly.graph_objs as go
+import json
+
 
 def plot_trajectory_and_scatter(
         trajectory_input_file: str,
         scatter_input_file: str,
-        output_file: str):
+        output_file: str,
+        existing_map_file: str = None):
     """
     This function plots the trajectories and scatter points on a plotly map, with different colors
     for each unique 'uid' in the data. If 'uid' column is not present, it plots all data
     as a single trajectory and a single set of scatter points.
+    If existing_map_file is provided, it loads the existing map and adds the new trajectories.(else is None)
 
     Parameters
     ----------
@@ -18,6 +22,8 @@ def plot_trajectory_and_scatter(
         The scatter points data file path to be processed.
     output_file : str
         The output graph file path (a json file).
+    existing_map_file : str, optional
+        The path to an existing map file to update with new trajectory and scatter points (default is None).
     """
     tdf = pd.read_csv(trajectory_input_file)
     sdf = pd.read_csv(scatter_input_file)
@@ -85,29 +91,33 @@ def plot_trajectory_and_scatter(
         )
         traces.append(scatter_trace)
 
-    # Define the center of the map
-    center_lat = (tdf['lat'].mean() + sdf['lat'].mean()) / 2
-    center_lon = (tdf['lng'].mean() + sdf['lng'].mean()) / 2
+    # If an existing map file is provided, load it and add the new traces
+    if existing_map_file:
+        with open(existing_map_file, 'r') as f:
+            existing_map_data = json.load(f)
+        fig = go.Figure(data=existing_map_data['data'] + traces, layout=existing_map_data['layout'])
+    else:
+        # Define the center of the map
+        center_lat = (tdf['lat'].mean() + sdf['lat'].mean()) / 2
+        center_lon = (tdf['lng'].mean() + sdf['lng'].mean()) / 2
 
-    # Define layout with Mapbox settings
-    layout = go.Layout(
-        title='Trajectory and Scatter Plot with Mapbox',
-        mapbox=dict(
-            style="open-street-map",
-            bearing=0,
-            center=dict(
-                lat=center_lat,
-                lon=center_lon
+        # Define layout with Mapbox settings
+        layout = go.Layout(
+            title='Trajectory and Scatter Plot with Mapbox',
+            mapbox=dict(
+                style="open-street-map",
+                bearing=0,
+                center=dict(
+                    lat=center_lat,
+                    lon=center_lon
+                ),
+                pitch=0,
+                zoom=10
             ),
-            pitch=0,
-            zoom=10
-        ),
-        autosize=True,
-        showlegend=True
-    )
-
-    # Create a Figure with data and layout
-    fig = go.Figure(data=traces, layout=layout)
+            autosize=True,
+            showlegend=True
+        )
+        fig = go.Figure(data=traces, layout=layout)
 
     # Write the figure to a JSON file
     fig.write_json(output_file)
