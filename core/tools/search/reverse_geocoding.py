@@ -1,3 +1,5 @@
+import os
+
 import requests
 import json
 
@@ -9,6 +11,8 @@ def reverse_geocoding(
     """
     This function transforms the geo coordinates(longitude and latitude) to POIs (mainland China).
     The POI correspond to the information of the location.
+    The usage of this tool is strictly limited.
+    Please limit your usage to avoid exceeding the limit.(use geo_decode instead)
 
     Parameters
     ----------
@@ -26,7 +30,7 @@ def reverse_geocoding(
 
     params = {
         "location": str(longitude)+","+str(latitude),
-        "key": "2a2b92d607ebc4b19abcb32353bb5d81"
+        "key": os.environ["GAO_DE_API_KEY"],
     }
 
     response = requests.get(url, params=params)

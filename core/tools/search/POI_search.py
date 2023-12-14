@@ -1,3 +1,5 @@
+import os
+
 import requests
 import json
 
@@ -27,7 +29,7 @@ def POI_search(
     params = {
         "keywords": keywords,
         "city": city,
-        "key": "2a2b92d607ebc4b19abcb32353bb5d81",
+        "key": os.environ["GAO_DE_API_KEY"],
         "page": 1,
         "offset": 10
     }

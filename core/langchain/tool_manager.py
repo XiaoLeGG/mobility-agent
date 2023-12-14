@@ -1,3 +1,5 @@
+import os
+
 from .compression_tool import CompressionTool
 from .filtering_tool import FilteringTool
 from .plot_trajectory import PlotTrajectoryTool, PlotScatterTool, PlotTrajectoryAndScatterTool, PlotHeatmapDensityTool, \
@@ -15,30 +17,43 @@ from .python_repl_tool import CustomPythonREPLTool
 from typing import List
 from langchain.tools import BaseTool
 
+from .weather_tool import WeatherTool
+
 
 def collect_tools():
     tools: List[BaseTool] = [CompressionTool(),
-            FilteringTool(),
-            StopDetectionTool(),
-            HomeLocationTool(),
-            JsonTool(),
-            MaxDistanceTool(),
-            RadiusGyrationTool(),
-            KRadiusGyrationTool(),
-            JumpLengthsTool(),
-            RecencyRankTool(),
-            TableReaderTool(),
-            CustomPythonREPLTool(),
-            PlotTrajectoryTool(),
-            PlotScatterTool(),
-            PlotHeatmapDensityTool(),
-            PlotHeatmapTool(),
-            PlotDynamicTrajectoryTool(),
-            PlotTrajectoryAndScatterTool(),
-            GeoDecodeTool()
-            ]
+                             FilteringTool(),
+                             StopDetectionTool(),
+                             HomeLocationTool(),
+                             JsonTool(),
+                             MaxDistanceTool(),
+                             RadiusGyrationTool(),
+                             KRadiusGyrationTool(),
+                             JumpLengthsTool(),
+                             RecencyRankTool(),
+                             TableReaderTool(),
+                             CustomPythonREPLTool(),
+                             PlotTrajectoryTool(),
+                             PlotScatterTool(),
+                             PlotHeatmapDensityTool(),
+                             PlotHeatmapTool(),
+                             PlotDynamicTrajectoryTool(),
+                             PlotTrajectoryAndScatterTool(),
+                             GeoDecodeTool(),
+                             WeatherTool(),
+                             ]
+    SERPAPI_API_KEY = "SERPAPI_API_KEY"
+    if SERPAPI_API_KEY in os.environ and os.environ[SERPAPI_API_KEY]:
+        from .search_tool import SearchTool
+        tools.append(SearchTool)
+    GAO_DE_API_KEY = "GAO_DE_API_KEY"
+    if GAO_DE_API_KEY in os.environ and os.environ[GAO_DE_API_KEY]:
+        from .reverse_geodecode_tool import ReverseGeodecodeTool
+        tools.append(ReverseGeodecodeTool())
+        from .POI_search_tool import POISearchTool
+        tools.append(POISearchTool())
+
     for i in range(len(tools)):
-        tools[i].handle_tool_error=lambda e: "Error occurs, you may check the existance of file and use table reader to check the data: " + str(e)
+        tools[i].handle_tool_error = lambda \
+                e: "Error occurs, you may check the existance of file and use table reader to check the data: " + str(e)
     return tools
-
-
