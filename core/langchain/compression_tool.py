@@ -12,13 +12,13 @@ class CompressionSchema(BaseModel):
 
 class CompressionTool(BaseTool):
     name = "compression"
-    description = "Compress the consecutive points."
+    description = "Compress the consecutive points. This is often used to reduce the size of the trajectory data when dealing with large scale problem."
     args_schema: Type[CompressionSchema] = CompressionSchema
     def _run(
             self,
             input_file: str,
             output_file: str,
             radius: float=0.2
-    ) -> int:
+    ) -> str:
         """Use the tool."""
-        return compression.compression(input_file, output_file, radius)
+        return f"The compressed trajectory now has {compression.compression(input_file, output_file, radius)} points."

@@ -21,4 +21,5 @@ class RecencyRankTool(BaseTool):
             output_file: str
     ):
         """Use the tool."""
-        return recency_rank(input_file, output_file)
+        array = recency_rank(input_file, output_file)
+        return f"The result is in the form of 4-d numpy array id, location (latitude and longitude) and the recency rank, the length is {array.shape[0]}."

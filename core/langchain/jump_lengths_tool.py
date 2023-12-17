@@ -21,4 +21,5 @@ class JumpLengthsTool(BaseTool):
             output_file: str
     ):
         """Use the tool."""
-        return jl.jump_lengths(input_file, output_file)
+        array = jl.jump_lengths(input_file, output_file)
+        return f"The result is in the form of 2-d numpy array (uid, jump_length : List), the length is {array.shape[0]}"

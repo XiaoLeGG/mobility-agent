@@ -7,16 +7,16 @@ class TableReaderSchema(BaseModel):
     class Config:
         arbitrary_types_allowed = True
     input_file: str = Field(description="The csv file to read information.")
-    select_records: int = Field(description="The number of head records to be selected. If not specified, 5 records will be selected. If the number is larger than the number of records, all records will be selected.", default=5)
+    select_records: int = Field(description="The number of head records to be selected. If the number is larger than the number of records, all records will be selected. If you just want to know the format of the table, 5 is recommended. If you want to mine some information of whole data, please select a large number.")
     
 class TableReaderTool(BaseTool):
     name = "table_reader"
-    description = "Reader the table information including column name, data type, number of records and head records. Return a string for LLM to read."
+    description = "Reader the table information including column name, data type, number of records and head records."
     args_schema: Type[TableReaderSchema] = TableReaderSchema
     def _run(
             self,
             input_file: str,
-            select_records: int = 5,
+            select_records: int,
     ) -> str:
         """Read table information."""
         df = pd.read_csv(input_file)

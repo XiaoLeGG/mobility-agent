@@ -23,5 +23,5 @@ class StopDetectionTool(BaseTool):
             radius: float=1.0
     ) -> int:
         """Use the tool."""
-        return detection.stop_detection(input_file, output_file, stay_time, radius)
+        return f"{detection.stop_detection(input_file, output_file, stay_time, radius)} points detected."
     

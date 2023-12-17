@@ -21,7 +21,7 @@ class KRadiusGyrationSchema(BaseModel):
 
 class RadiusGyrationTool(BaseTool):
     name = "radius_gyration"
-    description = "Compute the radius of gyration (in kilometers) of a set of individuals. The radius of gyration is a measure used to quantify the spatial dispersion or the spread of an individual's or object's movements over time. It provides an indication of how far an individual typically moves from their center of activity."
+    description = "Compute the radius of gyration (in kilometers) of a set of individuals. This is used to quantify the spatial dispersion or the spread of an individual's or object's movements over time. In other words, it is used to measure an individual activity range."
     args_schema: Type[RadiusGyrationSchema] = RadiusGyrationSchema
     
     def _run(
@@ -30,12 +30,13 @@ class RadiusGyrationTool(BaseTool):
             output_file: str,
     ):
         """Use the tool."""
-        return gyration.radius_gyration(input_file, output_file)
+        array = gyration.radius_gyration(input_file, output_file)
+        return f"The result is in the form of 2-d numpy array (uid, gyration) {array}, the length is {len(array)}"
 
 
 class KRadiusGyrationTool(BaseTool):
     name = "k_radius_gyration"
-    description = "Compute the k-radii of gyration (in kilometers) of a set of individuals. In mobility analysis, the k-radius of gyration indicates the characteristic distance travelled by that individual as induced by their k most frequent locations."
+    description = "Compute the k-radii of gyration (in kilometers) of a set of individuals. This indicates the characteristic distance travelled by that individual as induced by their k most frequent locations. It is often used to measure an individual activity range by there k most frequent locations."
     args_schema: Type[KRadiusGyrationSchema] = KRadiusGyrationSchema
     
     def _run(
@@ -45,4 +46,5 @@ class KRadiusGyrationTool(BaseTool):
             k: int = 2
     ):
         """Use the tool."""
-        return gyration.k_radius_gyration(input_file, output_file, k)
+        array = gyration.k_radius_gyration(input_file, output_file, k)
+        return f"The result is in the form of 2-d numpy array (uid, gyration), the length is {array.shape[0]}."

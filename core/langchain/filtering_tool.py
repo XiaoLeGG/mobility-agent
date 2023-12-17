@@ -27,4 +27,4 @@ class FilteringTool(BaseTool):
             loop_intensity: float=1.0
     ) -> int:
         """Use the tool."""
-        return filtering.noise_filtering(input_file, output_file, max_speed, include_loop, loop_intensity)
+        return f"{filtering.noise_filtering(input_file, output_file, max_speed, include_loop, loop_intensity)} points have been deleted."

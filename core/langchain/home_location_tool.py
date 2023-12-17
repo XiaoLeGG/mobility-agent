@@ -14,7 +14,7 @@ class HomeLocationSchema(BaseModel):
 
 class HomeLocationTool(BaseTool):
     name = "home_location"
-    description = "This function compute the home location of a set of individuals. The home location is defined as the location `v` for every individual `u` visits most during nighttime."
+    description = "This function compute the home location of a set of individuals. The home location is defined as the location for every individual visits most during a certain period of time (nighttime for inferring home location)."
     args_schema: Type[HomeLocationSchema] = HomeLocationSchema
     def _run(
             self,
@@ -24,4 +24,5 @@ class HomeLocationTool(BaseTool):
             end_night_time: str='06:00'
     ):
         """Use the tool."""
-        return hl.home_location(input_file, output_file, start_night_time, end_night_time)
+        array = hl.home_location(input_file, output_file, start_night_time, end_night_time)
+        return f"The processed data is in the form of numpy (uid, lat, lon), the length is {array.shape[0]}."

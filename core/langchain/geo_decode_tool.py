@@ -15,7 +15,7 @@ class GeoDecodeTool(BaseTool):
     name = "geo_decode"
     description = str(
         "Transfer the latitude and longitude to specific address with its relative information."
-        "This can help you to better understand the location and wrap a range of location to a specific address."
+        "This can help you to better understand the location and wrap a close group of locations to a specific place."
         "This tool add 6 new columns named 'address_name', 'function_type', 'class', 'province', 'city' and 'district' to the data table."
     )
     args_schema: Type[GeoDecodeSchema] = GeoDecodeSchema
@@ -23,7 +23,7 @@ class GeoDecodeTool(BaseTool):
             self,
             input_file: str,
             output_file: str,
-    ) -> None:
+    ) -> str:
         """Use the tool."""
         data = fu.load_tdf(input_file)
         for i in range(len(data)):
@@ -36,3 +36,4 @@ class GeoDecodeTool(BaseTool):
             data.loc[i, 'district'] = result[7]
             
         fu.save_csv(data, output_file)
+        return f"The processed data is in the form of pandas dataframe, the length of data rows is {data.shape[0]}."
