@@ -37,15 +37,15 @@
 - [x] 对提供的轨迹数据去除噪点，并完成停留点检测任务，绘制出停留点的位置    ==使用工具filtering，stop_detection，plot_scatter，文件路径为2575acf1-b6d3-4922-9059-e4a3799e04cc/stops_plot.json==
 - [x] 对提供的轨迹数据完成进行轨迹压缩，绘制出压缩后的轨迹图  ==使用工具compression，plot_trajectory文件路径为5d3e32e8-ed39-4d14-9cef-3f9b096f28a7/compressed_trajectory_plot.json==
 - [x] 对提供的轨迹数据去除明显的问题数据，找出每个人的家的位置和去到过离家最远的位置    ==使用工具filtering，home_location，max_distance文件路径为d94c529f-0944-4b74-af2b-d409205eff94/max_distance.csv==
-- [ ] 对提供的轨迹数据，压缩轨迹，找到每个用户访问次数最多的地方  ==使用工具compression，stop_detection，MobilityGPT_Python_REPL，文件路径为fc052b04-d1ec-4d98-b10f-d42eff872d01/most_visited_locations.csv，结果返回的是每个用户最常去的地点都是1，有问题==
+- [ ] 对提供的轨迹数据，压缩轨迹，找到每个用户访问次数最多的地方  ==使用工具compression，stop_detection，MobilityGPT_Python_REPL，文件路径为fc052b04-d1ec-4d98-b10f-d42eff872d01/most_visited_locations.csv，结果返回的是每个用户最常去的地点都是1，有问题==(修正，不做stop detection，考虑做location_frequency后排序)
 - [ ] 对提供的轨迹数据，用重力模型去预测每个用户未来一天的数据，并画出轨迹图 ==重力模型还没加到langchainTools里面==
-- [ ] 对提供的轨迹数据，找出每个点的加速度，然后找出每个用户加速度最大的十个点   ==使用MobilityGPT_Python_REPL工具，但是写不出来，一直道歉==
-- [ ] 对提供的轨迹数据，挑选出早上八点到晚上八点之间的数据，进行停留点检测，并在地图上标出响应位置   ==使用工具MobilityGPT_Python_REPL，stop_detection，plot_scatter文件路径为bdd99506-a470-4635-a54b-5dc0629143ce/stop_points_map.json，使用MobilityGPT_Python_REPL选择时间段的数据的时候未考虑时区的问题==
+- [ ] 对提供的轨迹数据，找出每个点的加速度，然后找出每个用户加速度最大的十个点   ==使用MobilityGPT_Python_REPL工具，但是写不出来，一直道歉==（先计算每个点的速度，再根据*Vt^2-Vo^2=2as*算出加速度）
+- [ ] 对提供的轨迹数据，挑选出早上八点到晚上八点之间的数据，进行停留点检测，并在地图上标出相应位置   ==使用工具MobilityGPT_Python_REPL，stop_detection，plot_scatter文件路径为bdd99506-a470-4635-a54b-5dc0629143ce/stop_points_map.json，使用MobilityGPT_Python_REPL选择时间段的数据的时候未考虑时区的问题==
 - [ ] 利用轨迹压缩技术，将用户的轨迹数据进行聚类，找到每个用户活动最频繁的区域，并绘制出聚类后的热力图  ==第一次回答：好的，我理解您的需求是对用户的轨迹数据进行压缩和聚类，找出每个用户最活跃的区域，并绘制热力图。为了更好地完成这个任务，我需要一些额外的信息
   1.请提供要处理的轨迹数据文件。： 不和他重复文件
   2.对于轨迹压缩，您希望设置的最小距离 (单位: 公里) 是多少?： 0.2 
   3.对于聚类，您希望设置的停留时间 (单位: 分钟) 和半径 (单位: 公里) 是多少?30 0.2  
-  4.您希望热力图的密度值是基于什么计算的? 是基于点的强度还是已经在输入文件中存储的密度值?：点的强度,结果：error他去使用了不存在的文件==
+  4.您希望热力图的密度值是基于什么计算的? 是基于点的强度还是已经在输入文件中存储的密度值?：点的强度,结果：error他去使用了不存在的文件==（只做聚类，热力图）
 
 - [x] 对轨迹数据计算速度，检测每个点的速度异常，然后找出每个用户速度异常最大的十个点，并绘制出异常点的轨迹图   ==使用工具table_reader，MobilityGPT_Python_REPL计算每个点的速度，并检测速度异常的点，MobilityGPT_Python_REPL选择速度最大的十个点，plot_trajectory文件路径为2290b7fb-b385-4a5b-a45d-ac3aff220b4b/abnormal_trajectory_plot.json，点的数目是正确的==
 
