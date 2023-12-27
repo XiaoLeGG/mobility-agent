@@ -14,10 +14,13 @@ from .recency_rank_tool import RecencyRankTool
 from .table_reader_tool import TableReaderTool
 from .geo_decode_tool import GeoDecodeTool
 from .python_repl_tool import CustomPythonREPLTool
+from .rag_tool import RAGTool
 from typing import List
 from langchain.tools import BaseTool
 
 from .weather_tool import WeatherTool
+
+from ..tools.rag import retriever
 
 
 def collect_tools():
@@ -52,6 +55,10 @@ def collect_tools():
         tools.append(ReverseGeodecodeTool())
         from .POI_search_tool import POISearchTool
         tools.append(POISearchTool())
+
+    db = retriever.load_db("./faiss", "db")
+    retriever.set_db(db)
+    tools.append(RAGTool())
 
     for i in range(len(tools)):
         tools[i].handle_tool_error = lambda \
