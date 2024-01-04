@@ -78,9 +78,6 @@ class MobilityAgent():
         3. Identify the request type.
         4. Handle the request accordingly.
         5. For unclear requests, seek more information.
-        [RAG] You are provieded with a retrieval augmented generation model to help you. Use it when:
-        1. Confused about the parameters selection of tools. Especially for table_reader.
-        2. Gain more information to help you solve the problem.
         [OUTPUT] All output files should be CSV, stored in "{output_folder}".
         [INITIAL DATA FILE] {input_file}
         [TIPS]
