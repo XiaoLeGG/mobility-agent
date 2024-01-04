@@ -142,8 +142,6 @@ with gr.Blocks() as demo:
     clear.click(reset_chat)
     with gr.Accordion("ReAct Trace", open=False):
         react_trace = gr.Text("ReAct Trace shows the thought and action of the chatbot that can help you understand.",lines=20)
-    with gr.Accordion("Developer"):
-        gr.Markdown("伦天乐 苏军又 陶毅诚")
     single_button.click(single_shot, inputs=[text_input, csv_input],
                         outputs=[text_output, graph_output_1, csv_output, react_trace])
     submit.click(chat_respond, [msg, chatbot], [chatbot, graph_output_1, csv_output, react_trace])
