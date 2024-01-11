@@ -7,7 +7,9 @@ from gradio_folium import Folium
 from core.langchain.mobility_agent import MobilityAgent
 import plotly.graph_objs as go
 
-ROOT_PATH = "assets/"
+ROOT_PATH = os.path.join("." + os.sep, "assets" + os.sep)
+if not os.path.exists(ROOT_PATH):
+    os.makedirs(ROOT_PATH)
 
 init = False
 agent = MobilityAgent()
@@ -74,11 +76,12 @@ def single_shot(text_input, csv_input):
 def chat_process_file(csv_input):
     if csv_input is not None:
         filename0 = csv_input.name
-        target_path = ROOT_PATH + "chat/" + os.path.basename(filename0)
-        if os.listdir(ROOT_PATH + "chat"):
+        target_path = os.path.join(ROOT_PATH, os.path.basename(filename0))
+        chat_dir = get_chat_dir()
+        if os.listdir(chat_dir):
             # Clear all the contents of the directory
-            for filename in os.listdir(ROOT_PATH + "chat"):
-                file_path = os.path.join(ROOT_PATH + "chat", filename)
+            for filename in os.listdir(chat_dir):
+                file_path = os.path.join(chat_dir, filename)
                 try:
                     if os.path.isfile(file_path) or os.path.islink(file_path):
                         os.unlink(file_path)
@@ -91,6 +94,12 @@ def chat_process_file(csv_input):
                 shutil.copyfileobj(source_file, target_file)
 
 
+def get_chat_dir():
+    chat_dir = os.path.join(ROOT_PATH, "chat" + os.sep)
+    if not os.path.exists(chat_dir):
+        os.makedirs(chat_dir)
+    return chat_dir
+
 def chat_respond(text_input, chat_history):
     target_path = None
     if text_input == "":
@@ -98,9 +107,10 @@ def chat_respond(text_input, chat_history):
     prompt = text_input
     global init
     if not init:
-        entries = os.listdir(ROOT_PATH + "chat")
+        chat_dir = get_chat_dir()
+        entries = os.listdir(chat_dir)
         if entries:
-            target_path = os.path.join(ROOT_PATH + "chat", entries[0])
+            target_path = os.path.join(chat_dir, entries[0])
             if not os.path.isfile(target_path):
                 target_path = None
         agent.start(target_path)

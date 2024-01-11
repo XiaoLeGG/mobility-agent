@@ -13,6 +13,9 @@ conda create -n mobility-gpt --file requirements.txt
 
 # Run
 
+Before running, you need to set your openai api key to environment variables "OPENAI_API_KEY".
+Also you can set other environment variables like "HTTP_PROXY" or "HTTPS_PROXY" to use proxy.
+
 ```
 python gradio_demo.py
 ```

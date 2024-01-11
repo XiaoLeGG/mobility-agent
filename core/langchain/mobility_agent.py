@@ -152,6 +152,8 @@ class MobilityAgent():
             The initial data file path to be processed.
         
         """
+        if input_file is None:
+            input_file = "Not provided yet"
         self._current_session_id = uuid.uuid4()
         self._agent_memory.clear()
         self._conversation_count = 0
