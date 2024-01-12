@@ -125,6 +125,7 @@ def chat_respond(text_input, chat_history):
 def reset_chat():
     global init
     init = False
+    return None, None, None
 
 
 
@@ -152,11 +153,11 @@ with gr.Blocks() as demo:
     # graph_output_2 = Folium(label="Visualization2")
     csv_output = gr.Dataframe(label="Output CSV")
     file_input.change(fn=chat_process_file, inputs=file_input)
-    clear.click(reset_chat)
     with gr.Accordion("ReAct Trace", open=False):
         react_trace = gr.Text("ReAct Trace shows the thought and action of the chatbot that can help you understand.",lines=20)
     # single_button.click(single_shot, inputs=[text_input, csv_input],
     #                     outputs=[text_output, graph_output_1, csv_output, react_trace])
+    clear.click(reset_chat, outputs=[graph_output_1, csv_output, react_trace])
     submit.click(chat_respond, [msg, chatbot], [chatbot, graph_output_1, csv_output, react_trace])
 
 demo.launch()
