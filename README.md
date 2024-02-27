@@ -1,5 +1,5 @@
 # MobilityAgent
-Mobility-Agent is an agent based on LLM(Large Language Model) implementing Langchain framework, targeting at automatically completing time-space trajectories analysis tasks through conversation.
+Mobility-Agent is an agent based on LLM(Large Language Model) implementing Langchain framework, targeting at automatically completing spatio-temporal trajectories analysis tasks through conversation.
 
 **Paper:** []
 
