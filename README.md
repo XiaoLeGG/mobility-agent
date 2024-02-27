@@ -19,3 +19,13 @@ Also you can set other environment variables like "HTTP_PROXY" or "HTTPS_PROXY" 
 ```
 python gradio_demo.py
 ```
+
+# Reference
+```
+@misc{MobilityAgent2023,
+    title={MobilityAgent},
+    author={Tianle Lun, Yicheng Tao, Junyou Su, He Zhu, Zipei Fan},
+    howpublished = {\url{https://github.com/XiaoLeGG/mobility-agent}},
+    year={2023}
+}
+```
