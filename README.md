@@ -8,7 +8,7 @@ Mobility-Agent is an agent based on LLM(Large Language Model) implementing Langc
 ```
 git clone https://github.com/XiaoLeGG/mobility-agent.git
 cd mobility-agent
-conda create -n mobility-gpt --file requirements.txt
+conda create -n mobility-agent --file requirements.txt
 ```
 
 # Run
