@@ -1,4 +1,4 @@
-from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 from langchain.agents import AgentType, initialize_agent
 from langchain.prompts import MessagesPlaceholder
 from core.langchain.callback_manager import MACallbackHandler

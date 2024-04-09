@@ -1,5 +1,5 @@
-from langchain.document_loaders import TextLoader, PyPDFLoader, UnstructuredHTMLLoader, UnstructuredMarkdownLoader
-from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain_community.document_loaders import TextLoader, PyPDFLoader, UnstructuredHTMLLoader, UnstructuredMarkdownLoader
+from langchain_openai import OpenAIEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores.faiss import FAISS
 import os
@@ -35,7 +35,7 @@ def save_db(db : FAISS, folder : str, path : str):
     db.save_local(folder, path)
 
 def load_db(folder : str, path : str):
-    db = FAISS.load_local(folder, OpenAIEmbeddings(), path)
+    db = FAISS.load_local(folder, OpenAIEmbeddings(), path, allow_dangerous_deserialization=True)
     return db
 
 def query(db : FAISS, question : str) -> str:
